@@ -1,4 +1,4 @@
-#coding=utf-8
+
 # -*- coding: utf-8 -*-
 import unittest
 
@@ -453,9 +453,13 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
                     el.click()
 
                     self.wait_transition(2.5)
+                    try:
 
-                    videonum=self.wait.until(EC.presence_of_all_elements_located((By.ID,"iv_video_play")))
-                    vtag=self.wait.until(EC.presence_of_all_elements_located((By.ID,"tv_tag")))
+                        videonum=self.wait.until(EC.presence_of_all_elements_located((By.ID,"iv_video_play")))
+                        vtag=self.wait.until(EC.presence_of_all_elements_located((By.ID,"tv_tag")))
+                    except:
+                        videonum=self.wait.until(EC.presence_of_all_elements_located((By.ID,"iv_screenshot")))
+                        vtag=self.wait.until(EC.presence_of_all_elements_located((By.ID,"tv_tag")))
                     if len(videonum)<4:
                         return False
                     else:
@@ -470,9 +474,12 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
             self.wait_transition(2.5)
             
             items = self.wait.until(EC.presence_of_all_elements_located((By.ID,"text")))
-            if str(items[len(items)-1]) == str(d[len(d)-1]):
+            if str(d[len(d)-1]) == items[len(items)-1].text:
                 return True
+            
 
+            
+            
     def check_zendesk(self):
         self.assertTrue(self.is_FAQ())
         self.assertTrue(self.is_Contact())
@@ -654,7 +661,7 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
             avideo=self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME,"android.view.View")))
         else:
             avideo=self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME,"android.view.ViewGroup")))
-        avideo[1].click()
+        avideo[0].click()
         self.wait_transition(2)
 
     def new_local_video_post(self):

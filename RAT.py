@@ -322,6 +322,8 @@ class DiscoveryAndSupportTests(BaseTests):
             raise
 
     def test_discoverytap(self):
+        reload(sys)
+        sys.setdefaultencoding('utf-8')
         try:
             self.sociushelper.click_login_by_email_link()
             self.sociushelper.login_account("channing@gmail.com", "zxasqw123")
