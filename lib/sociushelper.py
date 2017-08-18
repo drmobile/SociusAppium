@@ -271,7 +271,7 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
     def swipe_edit(self):
         left_x = self.window_size["width"] * 0.06
         right_x = self.window_size["width"] * 0.5
-        center_y = self.window_size["height"] * 0.9
+        center_y = self.window_size["height"] * 0.85
         self.driver.swipe(start_x=left_x, start_y=center_y, end_x=right_x, end_y=center_y, duration=500)
         self.wait_transition(1)
 
@@ -661,7 +661,7 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
             avideo=self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME,"android.view.View")))
         else:
             avideo=self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME,"android.view.ViewGroup")))
-        avideo[0].click()
+        avideo[1].click()
         self.wait_transition(2)
 
     def new_local_video_post(self):
@@ -702,7 +702,8 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.press_back_key()
         self.wait_transition(1)
 
-#
+    def click_accept(self):
+        self.click_button_with_id("btn_accept")
     def click_share_picture(self):
         self.swipe_picture()
 
@@ -751,9 +752,6 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         back_bt.click()
         self.wait_transition(3.5)
 
-
-
-        
 #
     def edit_live_record(self):
         x = self.window_size["width"] * 0.8

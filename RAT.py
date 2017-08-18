@@ -24,7 +24,7 @@ PATH = lambda p: os.path.abspath(
     os.path.join(os.path.dirname(__file__), p)
 )
 
-path1 = "../SociusAppium/test_resources/."
+path1 = "./test_resources/."
 
 # logger
 logger = logging.getLogger()
@@ -283,14 +283,8 @@ class DiscoveryAndSupportTests(BaseTests):
     """docstring for DiscoveryAndSupportTests"""
     def test_allpage(self):
         try:
-            expectedDisplayName=config.EXISTING_FACEBOOK_ACCOUNT1_DISPLAYNAME
-            expectedSoociiId=config.EXISTING_FACEBOOK_ACCOUNT1_SOOCIIID
-
-            # Facebook Login button on Soocii
-            self.sociushelper.click_facebook_login_button()
-            self.syshelper.login_facebook_account(config.EXISTING_FACEBOOK_ACCOUNT1, config.EXISTING_FACEBOOK_ACCOUNT1_PWD)
-
-            # confirm acquiring permission dialog
+            self.sociushelper.click_login_by_email_link()
+            self.sociushelper.login_account("channing@gmail.com", "zxasqw123")
             self.sociushelper.click_require_permission_button()
 
             self.sociushelper.swipe_discover()
@@ -383,7 +377,7 @@ class LiveTests(BaseTests):
             # self.sociushelper.login_account("channing@gmail.com", "zxasqw123")
 
             # self.sociushelper.click_require_permission_button()
-
+            check = True
             expectedDisplayName=config.EXISTING_FACEBOOK_ACCOUNT1_DISPLAYNAME
             expectedSoociiId=config.EXISTING_FACEBOOK_ACCOUNT1_SOOCIIID
 
@@ -393,24 +387,26 @@ class LiveTests(BaseTests):
 
             # confirm acquiring permission dialog
             self.sociushelper.click_require_permission_button()
-
             #open_streaming 10 times
-            # for x in range(10):
-            self.sociushelper.click_open_fab_button()
-            self.sociushelper.choice_game()
-            self.sociushelper.setting_live()
-            self.sociushelper.click_camera_floatball()
-            self.sociushelper.broadcast("hi welcome to my broadcast")
-            for y in range(3):
-                self.sociushelper.change_camera()
-            #share post
-            self.sociushelper.stop_live()
-            self.sociushelper.go_to_post()
-            self.sociushelper.share_live_record("broadcast",x)
-            self.sociushelper.click_camera_floatball()
-            self.sociushelper.back_soocii()
-            self.sociushelper.swipe_to_aboutme()
-            self.sociushelper.refresh_aboutme()
+            for x in range(10):
+                self.sociushelper.click_open_fab_button()
+                if check:
+                    self.sociushelper.click_accept()
+                    check = False
+                self.sociushelper.choice_game()
+                self.sociushelper.setting_live()
+                self.sociushelper.click_camera_floatball()
+                self.sociushelper.broadcast("hi welcome to my broadcast")
+                for y in range(3):
+                    self.sociushelper.change_camera()
+                #share post
+                self.sociushelper.stop_live()
+                self.sociushelper.go_to_post()
+                self.sociushelper.share_live_record("broadcast",x)
+                self.sociushelper.click_camera_floatball()
+                self.sociushelper.back_soocii()
+                self.sociushelper.swipe_to_aboutme()
+                self.sociushelper.refresh_aboutme()
 
         except :
             self.logger.info('caught exception: {}'.format(sys.exc_info()[0]))
@@ -423,9 +419,14 @@ class LiveTests(BaseTests):
             self.sociushelper.login_account("channing@gmail.com", "zxasqw123")
 
             self.sociushelper.click_require_permission_button()
+
+            check = True
             #open_streaming 10 times
             for x in range(10):
                 self.sociushelper.click_open_fab_button()
+                if check:
+                    self.sociushelper.click_accept()
+                    check = False
                 self.sociushelper.choice_game()
                 self.sociushelper.setting_live()
                 self.sociushelper.click_camera_floatball()
@@ -477,16 +478,9 @@ class PostsTests(BaseTests):
         havefile()
         try:
 
-            expectedDisplayName=config.EXISTING_FACEBOOK_ACCOUNT1_DISPLAYNAME
-            expectedSoociiId=config.EXISTING_FACEBOOK_ACCOUNT1_SOOCIIID
-
-            # Facebook Login button on Soocii
-            self.sociushelper.click_facebook_login_button()
-            self.syshelper.login_facebook_account(config.EXISTING_FACEBOOK_ACCOUNT1, config.EXISTING_FACEBOOK_ACCOUNT1_PWD)
-
-            # confirm acquiring permission dialog
+            self.sociushelper.click_login_by_email_link()
+            self.sociushelper.login_account("channing@gmail.com", "zxasqw123")
             self.sociushelper.click_require_permission_button()
-
 
             self.sociushelper.swipe_to_aboutme()
 
