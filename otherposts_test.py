@@ -34,16 +34,10 @@ logger.setLevel(logging.INFO)
 class otherposts(BaseTests):
     def test_other_videopost(self):
         try:
-            expectedDisplayName = config.EXISTING_FACEBOOK_ACCOUNT1_DISPLAYNAME
-            expectedSoociiId = config.EXISTING_FACEBOOK_ACCOUNT1_SOOCIIID
+            self.sociushelper.click_login_by_email_link()
+            self.sociushelper.login_account("channing@gmail.com", "zxasqw123")
 
-            # Facebook Login button on Soocii
-            self.sociushelper.click_facebook_login_button()
-            self.syshelper.login_facebook_account(config.EXISTING_FACEBOOK_ACCOUNT1, config.EXISTING_FACEBOOK_ACCOUNT1_PWD)
-
-            # confirm acquiring permission dialog
             self.sociushelper.click_require_permission_button()
-
             # click friend
             self.sociushelper.swipe_to_friendlist()
 

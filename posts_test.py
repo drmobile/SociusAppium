@@ -36,18 +36,14 @@ class PostsTests(BaseTests):
         havefile()
         try:
 
-            expectedDisplayName=config.EXISTING_FACEBOOK_ACCOUNT1_DISPLAYNAME
-            expectedSoociiId=config.EXISTING_FACEBOOK_ACCOUNT1_SOOCIIID
+            self.sociushelper.click_login_by_email_link()
+            self.sociushelper.login_account("channing@gmail.com", "zxasqw123")
 
-            # Facebook Login button on Soocii
-            self.sociushelper.click_facebook_login_button()
-            self.syshelper.login_facebook_account(config.EXISTING_FACEBOOK_ACCOUNT1, config.EXISTING_FACEBOOK_ACCOUNT1_PWD)
-
-            # confirm acquiring permission dialog
             self.sociushelper.click_require_permission_button()
 
 
             self.sociushelper.swipe_to_newsfeed()
+            self.sociushelper.swipe_refresh()
 
             self.sociushelper.click_viedo_to_share()##click viedo button in about me,and share viedo
 
@@ -56,6 +52,7 @@ class PostsTests(BaseTests):
             self.sociushelper.check_and_refresh_share_posts("video from about me")
 
 
+            self.sociushelper.swipe_loading()
             self.sociushelper.check_post()
 
         except :
@@ -66,26 +63,14 @@ class PostsTests(BaseTests):
     def test_firstposts(self):
         try:
             nofile()
-            accounthelper = AccountHelper()
+            self.sociushelper.click_login_by_email_link()
+            self.sociushelper.login_account("channing@gmail.com", "zxasqw123")
 
-            # Create new account button on Soocii
-            self.sociushelper.click_create_new_account_using_email_button()
-
-            # flow to create new account
-            self.sociushelper.create_account(
-                accounthelper.name,
-                accounthelper.name,
-                accounthelper.email,
-                "password1234")
-
-            # confirm to follow recommended celebrity
-            self.sociushelper.click_confirm_recommended_celebrity()
-
-            # confirm acquiring permission dialog
             self.sociushelper.click_require_permission_button()
 
 
             self.sociushelper.swipe_to_newsfeed()
+            self.sociushelper.swipe_refresh()
 
             self.sociushelper.new_local_video_post()
 
@@ -150,23 +135,15 @@ class PostsTests(BaseTests):
         try:
 
             nofile()#delete all file
-            accounthelper = AccountHelper()
 
-            # Create new account button on Soocii
-            self.sociushelper.click_create_new_account_using_email_button()
+            self.sociushelper.click_login_by_email_link()
+            self.sociushelper.login_account("channing@gmail.com", "zxasqw123")
 
-            # flow to create new account
-            self.sociushelper.create_account(
-                accounthelper.name,
-                accounthelper.name,
-                accounthelper.email,
-                "password1234")
-
-            # confirm to follow recommended celebrity
-            self.sociushelper.click_confirm_recommended_celebrity()
             self.sociushelper.click_require_permission_button()
 
+
             self.sociushelper.swipe_to_newsfeed()
+            self.sociushelper.swipe_refresh()
 
             self.sociushelper.click_share_picture()#click image button in about me,and share photo
 
@@ -191,9 +168,8 @@ class PostsTests(BaseTests):
             havefile()#put file to test case (photo and viedo)
             self.sociushelper.waitii()
 
-            print "cccccccc :" +os.path.abspath(path1)
-
             self.sociushelper.swipe_to_newsfeed()
+            self.sociushelper.swipe_refresh()
 
             self.sociushelper.click_viedo_to_share()##click viedo button in about me,and share viedo
 

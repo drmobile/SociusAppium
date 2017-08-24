@@ -116,7 +116,7 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.logger.info('sent password: {}'.format(pwd))
         self.click_button_with_id("login")
         # transition to next page
-        self.wait_transition(1)
+        self.wait_transition(2)
 
     def create_account(self, displayName, soociiId, email=None, pwd=None, confirmEmail=None, confirmPwd=None):
         self.send_text_with_id("display_name_value", displayName)
@@ -238,14 +238,14 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
 
     def swipe_to_faq(self):
         self.wait_transition(2)
-        self.click_textview_with_id("tv_faq")
+        self.click_textview_with_id("rl_faq")
 
     def swipe_to_contact(self):
         self.wait_transition(2)
-        self.click_textview_with_id("tv_contact")
+        self.click_textview_with_id("rl_contact_us")
 
     def swipe_refresh(self):
-        self.wait_transition(2)
+        self.wait_transition(2.5)
         self.swipe_down(350)
 
     def swipe_loading(self):
@@ -355,8 +355,8 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         displayName = self.get_text_with_id("tv_display_name")
         soociiId = self.get_text_with_id("tv_soocii_id")
         # go back to main page
-        self.press_back_key()
-        return displayName, soociiId
+
+        return displayName, soociiId.split('S.')[1]
 
     def get_friendlist_info(self):
         self.swipe_to_friendlist()
@@ -677,7 +677,7 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
     def choose_video(self):
         #choose folder
         photofolder=self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME,"android.widget.RelativeLayout")))
-        photofolder[0].click()
+        photofolder[1].click()
         self.wait_transition(2)
         #choose video
         if self.isAndroid5():
@@ -712,7 +712,7 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         #keyin title
         self.send_text_with_id("upload_edittext","upload video from local")
         self.click_textview_with_id("tv_share")
-        self.wait_transition(20)
+        self.wait_transition(22)
         self.swipe_refresh()
         #check title
         self.check_post_title("upload video from local")
