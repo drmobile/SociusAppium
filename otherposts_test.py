@@ -44,7 +44,7 @@ class otherposts(BaseTests):
             # click searchid
             self.sociushelper.swipe_to_SearchId()
             # click search id user
-            self.sociushelper.click_searchid()
+            self.sociushelper.click_searchid("scheng1")
             # click videocard
             self.sociushelper.swipe_posts()
             # check video unit

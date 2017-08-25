@@ -384,6 +384,17 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         else:
             return True
 
+    def get_number_with_id(self,ID):
+        self.wait_transition(1)
+        return self.get_text_with_id(ID)
+
+    def check_num_of_fans_follow(self,num):
+        items = self.wait.until(EC.presence_of_all_elements_located((By.ID,"tab_text")))
+        for text in items:
+            if num in text.text:
+                return True
+        return False
+
     def check_share_otherapp_posts(self):
         self.swipe_posts()
         self.swpie_share_posts()
@@ -571,9 +582,8 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.wait_transition(1.5)
 
 
-    def click_searchid(self):
-        self.send_text_with_id("input_soocii_id_text","scheng1")
-        self.wait_transition(2)
+    def click_searchid(self,text):
+        self.get_idsearch(text)
         self.click_button_with_id("fans_list_photo_image_view")
         self.wait_transition(2)
 
@@ -910,3 +920,45 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
                 self.wait_transition(2)
                 return True
         return False
+
+    def edit_infophoto(self):
+        self.wait_transition(2)
+        self.click_button_with_id("rl_edit")
+
+        self.wait_transition(2)
+        self.click_button_with_id("iv_avatar")
+
+        self.wait_transition(2)
+        self.click_textview_with_text(u"選擇照片")
+
+        self.wait_transition(2)
+        photofold = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.widget.RelativeLayout")))
+        photofold[0].click()
+
+        self.wait_transition(1)
+        if self.isAndroid5():
+            photobtn = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.view.View")))
+            photobtn[1].click()
+        else:
+            photobtn = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.view.ViewGroup")))
+            photobtn[1].click()
+
+    def edit_username_and_introduction(self):
+        self.wait_transition(2)
+        self.send_text_with_id("edit_display_name", "edit display name")
+
+        self.wait_transition(2)
+        self.send_text_with_id("et_about", "Hello welcome to my broatcast!!!")
+
+        self.click_button_with_id("menu_personal_info_check")
+        self.wait_transition(2)
+        self.swipe_refresh()
+        self.swipe_refresh()
+
+    def check_text(self, id, text):
+        texts = self.wait.until(EC.presence_of_element_located((By.ID, id)))
+        texts.text.index(text)
+
+
+
+
