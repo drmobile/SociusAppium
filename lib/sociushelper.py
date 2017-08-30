@@ -216,7 +216,7 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         return
 
     def swipe_to_aboutme(self):
-        self.wait_transition(2)
+        self.wait_transition(5)
         self.click_textview_with_id("icon_profile")
 
     def swipe_to_support(self):
@@ -593,6 +593,12 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.click_button_with_id("button1")
         self.wait_transition(20)
 
+    def setting_autopost(self):
+        self.click_button_with_id("ib_broadcast_auto_post_switch")
+        self.wait_transition(3)
+        self.click_button_with_id("btn_confirm")
+        self.wait_transition(3)
+
     def broadcast(self,message):
         self.click_button_with_id("iv_menu_icon_chat")
         self.wait_transition(1)
@@ -610,9 +616,10 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
 
     def stop_live(self):
         self.click_button_with_id("iv_menu_icon_stop")
-        self.wait_transition(5)
+        self.wait_transition(3)
 
     def go_to_post(self):
+        self.wait_transition(2)
         self.click_button_with_id("tv_go")
 
     def share_live_record(self, upload,x):
@@ -626,6 +633,13 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.click_button_with_id("tv_share")
         self.wait_transition(15)
 
+    def friend_select_message_edittext(self, upload,x):
+        self.click_button_with_id("friend_select_message_edittext")
+        self.wait_transition(1)
+        self.send_text_with_id("friend_select_message_edittext", upload+str(x+1))
+        self.logger.info('sent upload: {}'.format(upload+str(x+1)))
+        self.wait_transition(3)
+        
     def back_soocii(self):
         self.click_button_with_id("iv_menu_icon_back")
         self.wait_transition(1)
@@ -910,3 +924,22 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
                 self.wait_transition(2)
                 return True
         return False
+
+    def check_broadcast(self,x):
+        self.swipe_up(500)
+        items = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.widget.TextView")))
+        for el in items:
+            self.logger.info(u'Check text view: {}'.format(el.text))
+            if "autopost" in el.text:
+                self.logger.info(u'Found text view: {}'.format(el.text))
+                self.wait_transition(2)
+                self.swipe_down(500)
+                return True
+            elif "broadcast" in el.text:
+                self.logger.info(u'Found text view: {}'.format(el.text))
+                self.wait_transition(2)
+                self.swipe_down(500)
+                return True
+        return False
+    def wait_autopost(self):
+        self.wait_transition(30)
