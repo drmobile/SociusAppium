@@ -60,7 +60,7 @@ class EmailAccountTests(BaseTests):
             # expect seeing discover page
             self.assertTrue(self.sociushelper.is_discover())
             displayName, soociiId = self.sociushelper.get_personal_info()
-            self.assertTrue(accounthelper.name==displayName,
+            self.assertTrue("ID: S."+accounthelper.name==displayName,
                             u"expect value {}, but return unexpected {}".format(accounthelper.name, displayName))
             self.assertTrue(accounthelper.name==soociiId,
                             u"expect value {}, but return unexpected {}".format(accounthelper.name, soociiId))
@@ -71,7 +71,7 @@ class EmailAccountTests(BaseTests):
             displayName, soociiId = self.sociushelper.get_personal_info()
             self.assertTrue(accounthelper.name==displayName,
                             u"expect value {}, but return unexpected {}".format(accounthelper.name, displayName))
-            self.assertTrue(accounthelper.name==soociiId,
+            self.assertTrue("ID: S."+accounthelper.name==soociiId,
                             u"expect value {}, but return unexpected {}".format(accounthelper.name, soociiId))
         except:
             self.logger.info('caught exception: {}'.format(sys.exc_info()[0]))
