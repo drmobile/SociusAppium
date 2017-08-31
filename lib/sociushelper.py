@@ -775,7 +775,6 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.click_camera_floatball()
         self.wait_transition(1.5)
         start_bt = self.wait.until(EC.presence_of_element_located(By.ID,"iv_menu_icon_record"))
-        # self.
         start_bt.click()
         self.wait_transition(10)
         self.click_camera_floatball()
