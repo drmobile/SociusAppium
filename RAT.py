@@ -88,4 +88,3 @@ class BaseTests(unittest.TestCase):
         # end the session
         self.driver.quit()
 
-

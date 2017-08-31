@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 #coding=utf-8
 import unittest
@@ -115,7 +116,7 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.logger.info('sent password: {}'.format(pwd))
         self.click_button_with_id("login")
         # transition to next page
-        self.wait_transition(1)
+        self.wait_transition(2)
 
     def create_account(self, displayName, soociiId, email=None, pwd=None, confirmEmail=None, confirmPwd=None):
         self.send_text_with_id("display_name_value", displayName)
@@ -237,14 +238,14 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
 
     def swipe_to_faq(self):
         self.wait_transition(2)
-        self.click_textview_with_id("tv_faq")
+        self.click_textview_with_id("rl_faq")
 
     def swipe_to_contact(self):
         self.wait_transition(2)
-        self.click_textview_with_id("tv_contact")
+        self.click_textview_with_id("rl_contact_us")
 
     def swipe_refresh(self):
-        self.wait_transition(2)
+        self.wait_transition(2.5)
         self.swipe_down(350)
 
     def swipe_loading(self):
@@ -267,7 +268,7 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
     def swipe_edit(self):
         left_x = self.window_size["width"] * 0.06
         right_x = self.window_size["width"] * 0.5
-        center_y = self.window_size["height"] * 0.9
+        center_y = self.window_size["height"] * 0.85
         self.driver.swipe(start_x=left_x, start_y=center_y, end_x=right_x, end_y=center_y, duration=500)
         self.wait_transition(1)
 
@@ -312,7 +313,8 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.send_text_with_id("message_edit_text",text)
         self.wait_transition(1.5)
         self.click_button_with_id("outbox")
-        self.wait_transition(3)
+        self.wait_transition(1.5)
+
 
 
     def swipe_aboutme_video(self):
@@ -353,8 +355,8 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         displayName = self.get_text_with_id("tv_display_name")
         soociiId = self.get_text_with_id("tv_soocii_id")
         # go back to main page
-        self.press_back_key()
-        return displayName, soociiId
+
+        return displayName, soociiId.split('S.')[1]
 
     def get_friendlist_info(self):
         self.swipe_to_friendlist()
@@ -382,6 +384,17 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         else:
             return True
 
+    def get_number_with_id(self,ID):
+        self.wait_transition(1)
+        return self.get_text_with_id(ID)
+
+    def check_num_of_fans_follow(self,num):
+        items = self.wait.until(EC.presence_of_all_elements_located((By.ID,"tab_text")))
+        for text in items:
+            if num in text.text:
+                return True
+        return False
+
     def check_share_otherapp_posts(self):
         self.swipe_posts()
         self.swpie_share_posts()
@@ -396,7 +409,6 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
             else:
                 self.press_back_key()
                 return True
-
 
     def chech_share_posts(self):
         if self.get_text_with_id("tv_msg") in "this is share post testing":
@@ -458,11 +470,10 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
                     el.click()
 
                     self.wait_transition(2.5)
-
                     try:
                         videonum=self.wait.until(EC.presence_of_all_elements_located((By.ID,"iv_video_play")))
                         vtag=self.wait.until(EC.presence_of_all_elements_located((By.ID,"tv_tag")))
-                    except Exception as e:
+                    except:
                         videonum=self.wait.until(EC.presence_of_all_elements_located((By.ID,"iv_screenshot")))
                         vtag=self.wait.until(EC.presence_of_all_elements_located((By.ID,"tv_tag")))
 
@@ -480,9 +491,12 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
             self.wait_transition(2.5)
 
             items = self.wait.until(EC.presence_of_all_elements_located((By.ID,"text")))
-            if items[len(items)-1].text == str(d[len(d)-1]):
+            if str(d[len(d)-1]) == items[len(items)-1].text:
                 return True
+            
 
+            
+            
     def check_zendesk(self):
         self.assertTrue(self.is_FAQ())
         self.assertTrue(self.is_Contact())
@@ -567,9 +581,9 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.click_textview_with_id("tv_share")#click share button
         self.wait_transition(1.5)
 
-    def click_searchid(self):
-        self.send_text_with_id("input_soocii_id_text","scheng1")
-        self.wait_transition(2)
+
+    def click_searchid(self,text):
+        self.get_idsearch(text)
         self.click_button_with_id("fans_list_photo_image_view")
         self.wait_transition(2)
 
@@ -580,6 +594,7 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
     def click_accept(self):
         self.wait_transition(2)
         self.click_button_with_id("btn_accept")
+
 
     def choice_game(self):
         self.click_textview_with_text(["Snake Off","Snake Off"])
@@ -635,12 +650,12 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.wait_transition(3)
 
     def check_single_posts(self):
-
         postview=self.wait.until(EC.presence_of_element_located((By.CLASS_NAME,"android.view.View")))
         self.wait_transition(0.5)
         if postview is None:
             return False
         return True
+
     def check_post_title(self,text):
         #check title
         postmsg=self.wait.until(EC.presence_of_element_located((By.ID,"tv_msg")))
@@ -668,19 +683,10 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.wait_transition(2)
         self.check_post_title("edit post")
 
-    def check_share_otherapp_posts(self):
-        self.swipe_posts()
-        self.swpie_share_posts()
-        self.swipe_share_posts_to_otherapp()
-        shoth=self.wait.until(EC.presence_of_element_located((By.ID,"title")))
-        if shoth is None:
-            return False
-        return True
-
     def choose_video(self):
         #choose folder
         photofolder=self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME,"android.widget.RelativeLayout")))
-        photofolder[0].click()
+        photofolder[1].click()
         self.wait_transition(2)
         #choose video
         if self.isAndroid5():
@@ -715,7 +721,7 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         #keyin title
         self.send_text_with_id("upload_edittext","upload video from local")
         self.click_textview_with_id("tv_share")
-        self.wait_transition(20)
+        self.wait_transition(22)
         self.swipe_refresh()
         #check title
         self.check_post_title("upload video from local")
@@ -729,7 +735,8 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.press_back_key()
         self.wait_transition(1)
 
-#
+    def click_accept(self):
+        self.click_button_with_id("btn_accept")
     def click_share_picture(self):
         self.swipe_picture()
 
@@ -766,7 +773,6 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.click_camera_floatball()
         self.wait_transition(1.5)
         start_bt = self.wait.until(EC.presence_of_element_located(By.ID,"iv_menu_icon_record"))
-        # self.
         start_bt.click()
         self.wait_transition(10)
         self.click_camera_floatball()
@@ -910,3 +916,45 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
                 self.wait_transition(2)
                 return True
         return False
+
+    def edit_infophoto(self):
+        self.wait_transition(2)
+        self.click_button_with_id("rl_edit")
+
+        self.wait_transition(2)
+        self.click_button_with_id("iv_avatar")
+
+        self.wait_transition(2)
+        self.click_textview_with_text(u"選擇照片")
+
+        self.wait_transition(2)
+        photofold = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.widget.RelativeLayout")))
+        photofold[0].click()
+
+        self.wait_transition(1)
+        if self.isAndroid5():
+            photobtn = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.view.View")))
+            photobtn[1].click()
+        else:
+            photobtn = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.view.ViewGroup")))
+            photobtn[1].click()
+
+    def edit_username_and_introduction(self):
+        self.wait_transition(2)
+        self.send_text_with_id("edit_display_name", "edit display name")
+
+        self.wait_transition(2)
+        self.send_text_with_id("et_about", "Hello welcome to my broatcast!!!")
+
+        self.click_button_with_id("menu_personal_info_check")
+        self.wait_transition(2)
+        self.swipe_refresh()
+        self.swipe_refresh()
+
+    def check_text(self, id, text):
+        texts = self.wait.until(EC.presence_of_element_located((By.ID, id)))
+        texts.text.index(text)
+
+
+
+
