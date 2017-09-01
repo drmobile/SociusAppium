@@ -81,7 +81,7 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         # only require for Android6+
         if self.isAndroid5():
             return
-        self.click_textview_with_text([u"確認",u"confirm"])
+        self.click_textview_with_text([u"確認","Confirm"])
         # allow all system permissions
         self.allow_system_permissions(4)
         self.wait_transition(1)
@@ -219,6 +219,7 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
     def swipe_to_aboutme(self):
         self.wait_transition(2)
         self.click_textview_with_id("icon_profile")
+        self.wait_transition(2)
 
     def swipe_to_support(self):
         self.wait_transition(2)
@@ -250,7 +251,7 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
 
     def swipe_loading(self):
         self.wait_transition(2)
-        self.swipe_up(350)
+        self.swipe_up(650)
 
 
     def swipe_post_sandwish(self):
@@ -289,7 +290,7 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
 
 
     def swipe_posts(self):
-#
+        
         self.wait_transition(2.5)
         try:
             posts_bt = self.wait.until(EC.presence_of_element_located((By.ID,"iv_thumbnail")))
@@ -410,17 +411,16 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
                 self.press_back_key()
                 return True
 
-    def chech_share_posts(self):
+    def check_share_posts(self):
         if self.get_text_with_id("tv_msg") in "this is share post testing":
             return True
         return False
 
 
-    def check_and_refresh_share_posts(self,text):
+    def check_and_refresh_share_posts(self):
         for x in range(3):
             self.swipe_refresh()
             self.wait_transition(3)
-        self.check_post_title(text)
 
 
 
@@ -664,7 +664,6 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.wait_transition(2)
 
     def check_post(self):
-
         #click post
         postcard=self.wait.until(EC.presence_of_all_elements_located((By.ID,"iv_thumbnail")))
         postcard[0].click()
@@ -698,7 +697,7 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.wait_transition(2)
 
     def new_local_video_post(self):
-        self.wait_transition(5)
+        self.wait_transition(3)
         #add local video
         self.swipe_choose_video()
         self.wait_transition(2)
@@ -721,7 +720,7 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         #keyin title
         self.send_text_with_id("upload_edittext","upload video from local")
         self.click_textview_with_id("tv_share")
-        self.wait_transition(22)
+        self.wait_transition(10)
         self.swipe_refresh()
         #check title
         self.check_post_title("upload video from local")
