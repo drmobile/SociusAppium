@@ -154,4 +154,38 @@ class LiveTests(BaseTests):
             self.logger.info('caught exception: {}'.format(sys.exc_info()[0]))
             self.syshelper.capture_screen("test_game")
             raise
+    def test_autopost(self):
+        try:
+            # #login_with_email
+            self.sociushelper.click_login_by_email_link()
+            self.sociushelper.login_account("poi098@gmail.com", "poi098")
 
+            # confirm acquiring permission dialog
+            self.sociushelper.click_require_permission_button()
+
+            #open_streaming 10 times
+            for x in range(10):
+                self.sociushelper.click_open_fab_button()
+                try:
+                    self.sociushelper.click_accept()
+                except:
+                    pass
+                self.sociushelper.choice_game()
+                self.sociushelper.friend_select_message_edittext("autopost",x)
+                self.sociushelper.setting_live()
+                self.sociushelper.click_camera_floatball()
+                self.sociushelper.broadcast("hi welcome to my broadcast")
+                for y in range(3):
+                    self.sociushelper.change_camera()
+                self.sociushelper.wait_autopost()
+                #stop live
+                self.sociushelper.stop_live()
+                self.sociushelper.wait_autopost()
+                opensoocii()
+                self.sociushelper.swipe_to_aboutme()
+                self.sociushelper.refresh_aboutme()
+                self.assertTrue(self.sociushelper.check_broadcast(x))
+        except :
+            self.logger.info('caught exception: {}'.format(sys.exc_info()[0]))
+            self.syshelper.capture_screen("test_game")
+            raise
