@@ -954,6 +954,35 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         texts = self.wait.until(EC.presence_of_element_located((By.ID, id)))
         texts.text.index(text)
 
+    def friend_select_message_edittext(self, upload,x):
+        self.click_button_with_id("friend_select_message_edittext")
+        self.wait_transition(1)
+        self.send_text_with_id("friend_select_message_edittext", upload+str(x+1))
+        self.logger.info('sent upload: {}'.format(upload+str(x+1)))
+        self.wait_transition(3)
 
+    def wait_autopost(self):
+        self.wait_transition(30)
 
+    def setting_autopost(self):
+        self.click_button_with_id("ib_broadcast_auto_post_switch")
+        self.wait_transition(3)
+        self.click_button_with_id("btn_confirm")
+        self.wait_transition(3)
 
+    def check_broadcast(self,x):
+        self.swipe_up(500)
+        items = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.widget.TextView")))
+        for el in items:
+            self.logger.info(u'Check text view: {}'.format(el.text))
+            if "autopost" in el.text:
+                self.logger.info(u'Found text view: {}'.format(el.text))
+                self.wait_transition(2)
+                self.swipe_down(500)
+                return True
+            elif "broadcast" in el.text:
+                self.logger.info(u'Found text view: {}'.format(el.text))
+                self.wait_transition(2)
+                self.swipe_down(500)
+                return True
+        return False
