@@ -36,26 +36,23 @@ class PostsTests(BaseTests):
         havefile()
         try:
 
-            expectedDisplayName=config.EXISTING_FACEBOOK_ACCOUNT1_DISPLAYNAME
-            expectedSoociiId=config.EXISTING_FACEBOOK_ACCOUNT1_SOOCIIID
+            self.sociushelper.click_login_by_email_link()
+            self.sociushelper.login_account("channing@gmail.com", "zxasqw123")
 
-            # Facebook Login button on Soocii
-            self.sociushelper.click_facebook_login_button()
-            self.syshelper.login_facebook_account(config.EXISTING_FACEBOOK_ACCOUNT1, config.EXISTING_FACEBOOK_ACCOUNT1_PWD)
-
-            # confirm acquiring permission dialog
             self.sociushelper.click_require_permission_button()
 
 
             self.sociushelper.swipe_to_newsfeed()
+            self.sociushelper.swipe_refresh()
 
             self.sociushelper.click_viedo_to_share()##click viedo button in about me,and share viedo
 
             self.sociushelper.swipe_to_aboutme()
-
-            self.sociushelper.check_and_refresh_share_posts("video from about me")
-
-
+            
+            self.sociushelper.check_and_refresh_share_posts()
+            self.sociushelper.swipe_loading()
+            self.sociushelper.check_post_title("video from about me")
+            
             self.sociushelper.check_post()
 
         except :
@@ -66,26 +63,14 @@ class PostsTests(BaseTests):
     def test_firstposts(self):
         try:
             nofile()
-            accounthelper = AccountHelper()
+            self.sociushelper.click_login_by_email_link()
+            self.sociushelper.login_account("channing@gmail.com", "zxasqw123")
 
-            # Create new account button on Soocii
-            self.sociushelper.click_create_new_account_using_email_button()
-
-            # flow to create new account
-            self.sociushelper.create_account(
-                accounthelper.name,
-                accounthelper.name,
-                accounthelper.email,
-                "password1234")
-
-            # confirm to follow recommended celebrity
-            self.sociushelper.click_confirm_recommended_celebrity()
-
-            # confirm acquiring permission dialog
             self.sociushelper.click_require_permission_button()
 
 
             self.sociushelper.swipe_to_newsfeed()
+            self.sociushelper.swipe_refresh()
 
             self.sociushelper.new_local_video_post()
 
@@ -104,6 +89,7 @@ class PostsTests(BaseTests):
             self.sociushelper.click_require_permission_button()
 
             self.sociushelper.swipe_to_aboutme()
+            self.sociushelper.swipe_loading()
             self.sociushelper.swipe_posts()#into  single posts
             check_a = self.sociushelper.check_like_num(["like", u"個棒"]) # (a) to get like of number
             self.sociushelper.swipe_like()#click like
@@ -127,6 +113,7 @@ class PostsTests(BaseTests):
             self.sociushelper.click_require_permission_button()
 
             self.sociushelper.swipe_to_aboutme()
+            self.sociushelper.swipe_loading()
             self.sociushelper.swipe_posts()#click share button
             self.sociushelper.swpie_share_posts()#click share posts button
             self.sociushelper.swipe_share_posts_to_soocii()
@@ -134,8 +121,8 @@ class PostsTests(BaseTests):
             self.sociushelper.input_send_share_message("this is share post testing")#input message and click send button
 
             self.sociushelper.swipe_refresh()
-
-            self.assertTrue(self.sociushelper.chech_share_posts())#make sure
+            self.sociushelper.swipe_loading()
+            self.assertTrue(self.sociushelper.check_share_posts())#make sure
 
 
         except :
@@ -150,28 +137,22 @@ class PostsTests(BaseTests):
         try:
 
             nofile()#delete all file
-            accounthelper = AccountHelper()
 
-            # Create new account button on Soocii
-            self.sociushelper.click_create_new_account_using_email_button()
+            self.sociushelper.click_login_by_email_link()
+            self.sociushelper.login_account("channing@gmail.com", "zxasqw123")
 
-            # flow to create new account
-            self.sociushelper.create_account(
-                accounthelper.name,
-                accounthelper.name,
-                accounthelper.email,
-                "password1234")
-
-            # confirm to follow recommended celebrity
-            self.sociushelper.click_confirm_recommended_celebrity()
             self.sociushelper.click_require_permission_button()
 
+
             self.sociushelper.swipe_to_newsfeed()
+            self.sociushelper.swipe_refresh()
 
             self.sociushelper.click_share_picture()#click image button in about me,and share photo
 
-            self.sociushelper.check_and_refresh_share_posts("upload img from local")
+            self.sociushelper.check_and_refresh_share_posts()
             #come back to aboutme,to check share posts is exist (picture)
+            
+            self.sociushelper.check_post_title("upload img from local")
 
         except :
             self.logger.info('caught exception: {}'.format(sys.exc_info()[0]))
@@ -191,14 +172,15 @@ class PostsTests(BaseTests):
             havefile()#put file to test case (photo and viedo)
             self.sociushelper.waitii()
 
-            print "cccccccc :" +os.path.abspath(path1)
-
             self.sociushelper.swipe_to_newsfeed()
+            self.sociushelper.swipe_refresh()
 
             self.sociushelper.click_viedo_to_share()##click viedo button in about me,and share viedo
 
-            self.sociushelper.check_and_refresh_share_posts("video from about me")
+            self.sociushelper.check_and_refresh_share_posts()
             #come back to aboutme,to check share posts is exist (viedo)
+            
+            self.sociushelper.check_post_title("video from about me")
 
         except :
             self.logger.info('caught exception: {}'.format(sys.exc_info()[0]))
@@ -215,7 +197,7 @@ class PostsTests(BaseTests):
             self.sociushelper.click_require_permission_button()
 
             self.sociushelper.swipe_to_aboutme()
-
+            self.sociushelper.swipe_loading()
             self.assertTrue(self.sociushelper.check_share_otherapp_posts())
         except :
             self.logger.info('caught exception: {}'.format(sys.exc_info()[0]))
