@@ -14,7 +14,6 @@ from appium import webdriver
 import config
 from RAT import *
 
-
 # Returns abs path relative to this file and not cwd
 PATH = lambda p: os.path.abspath(
     os.path.join(os.path.dirname(__file__), p)
@@ -34,9 +33,11 @@ logger.setLevel(logging.INFO)
 class LiveTests(BaseTests):
     def test_openlive(self):
         try:
-            # login_with_email
+            # #login_with_email
             # self.sociushelper.click_login_by_email_link()
-            # self.sociushelper.login_account("poi098@gmail.com", "poi098")
+            # self.sociushelper.login_account("channing@gmail.com", "zxasqw123")
+
+            # self.sociushelper.click_require_permission_button()
 
             expectedDisplayName=config.EXISTING_FACEBOOK_ACCOUNT1_DISPLAYNAME
             expectedSoociiId=config.EXISTING_FACEBOOK_ACCOUNT1_SOOCIIID
@@ -49,14 +50,10 @@ class LiveTests(BaseTests):
             self.sociushelper.click_require_permission_button()
 
             #open_streaming 10 times
-            #for x in range(10):
+            # for x in range(10):
             self.sociushelper.click_open_fab_button()
-            try:
-                self.sociushelper.click_accept()
-            except:
-                pass
+            self.sociushelper.click_accept()
             self.sociushelper.choice_game()
-            # if x==0:self.sociushelper.setting_autopost()
             self.sociushelper.setting_live()
             self.sociushelper.click_camera_floatball()
             self.sociushelper.broadcast("hi welcome to my broadcast")
@@ -64,13 +61,12 @@ class LiveTests(BaseTests):
                 self.sociushelper.change_camera()
             #share post
             self.sociushelper.stop_live()
-            self.sociushelper.click_camera_floatball()
             self.sociushelper.go_to_post()
             self.sociushelper.share_live_record("broadcast",x)
-            opensoocii()
+            self.sociushelper.click_camera_floatball()
+            self.sociushelper.back_soocii()
             self.sociushelper.swipe_to_aboutme()
             self.sociushelper.refresh_aboutme()
-            self.assertTrue(self.sociushelper.check_broadcast())
 
         except :
             self.logger.info('caught exception: {}'.format(sys.exc_info()[0]))
@@ -158,39 +154,4 @@ class LiveTests(BaseTests):
             self.logger.info('caught exception: {}'.format(sys.exc_info()[0]))
             self.syshelper.capture_screen("test_game")
             raise
-    def test_autopost(self):
-        try:
-            # #login_with_email
-            self.sociushelper.click_login_by_email_link()
-            self.sociushelper.login_account("poi098@gmail.com", "poi098")
 
-            # confirm acquiring permission dialog
-            self.sociushelper.click_require_permission_button()
-
-            #open_streaming 10 times
-            for x in range(10):
-                self.sociushelper.click_open_fab_button()
-                try:
-                    self.sociushelper.click_accept()
-                except:
-                    pass
-                self.sociushelper.choice_game()
-                self.sociushelper.friend_select_message_edittext("autopost",x)
-                self.sociushelper.setting_live()
-                self.sociushelper.click_camera_floatball()
-                self.sociushelper.broadcast("hi welcome to my broadcast")
-                for y in range(3):
-                    self.sociushelper.change_camera()
-                self.sociushelper.wait_autopost()
-                #stop live
-                self.sociushelper.stop_live()
-                self.sociushelper.wait_autopost()
-                opensoocii()
-                self.sociushelper.swipe_to_aboutme()
-                self.sociushelper.refresh_aboutme()
-                self.assertTrue(self.sociushelper.check_broadcast(x))
-        except :
-            self.logger.info('caught exception: {}'.format(sys.exc_info()[0]))
-            self.syshelper.capture_screen("test_game")
-            raise
-        
