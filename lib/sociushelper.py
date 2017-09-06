@@ -81,6 +81,7 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         # only require for Android6+
         if self.isAndroid5():
             return
+        self.wait_transition(2)
         self.click_textview_with_text([u"確認","Confirm"])
         # allow all system permissions
         self.allow_system_permissions(4)
@@ -142,17 +143,17 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         # transition to next page
         self.wait_transition(1)
 
-    def __visibility_of_textview(self, text):
+    def __visibility_of_textview(self, tt):
         items = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.widget.TextView")))
         for el in items:
             if el.text in text:
                 return True
         return False
 
-    def is_message(self,text):# today
+    def is_message(self,tt):# today
         check = self.wait.until(EC.presence_of_all_elements_located((By.ID,"tv_comment_msg")))
         cname=check[len(check)-1].text
-        cname.index(text)
+        cname.index(tt)
 
     def is_discover(self):
         return self.__visibility_of_textview(["Discovery", u"探索"])
@@ -300,6 +301,10 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
             posts_bt.click()#if first post is iv_thumbnail(viedo) or iv_screenshot (photo) ,to click
 
         self.wait_transition(1)
+
+    def swipe_tofind(self):
+        self.wait_transition(2)
+        self.swipe_up(250)
 
     def swipe_like(self):
         like_bt = self.wait.until(EC.presence_of_element_located((By.ID,"iv_like")))
@@ -690,10 +695,10 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         #choose video
         if self.isAndroid5():
             avideo=self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME,"android.view.View")))
-            avideo[0].click()
+            avideo[1].click()
         else:
             avideo=self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME,"android.view.ViewGroup")))
-            avideo[0].click()
+            avideo[1].click()
         self.wait_transition(2)
 
     def new_local_video_post(self):
@@ -924,7 +929,7 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.click_button_with_id("iv_avatar")
 
         self.wait_transition(2)
-        self.click_textview_with_text(u"選擇照片")
+        self.click_textview_with_text([u"選擇照片","Browse photo"])
 
         self.wait_transition(2)
         photofold = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.widget.RelativeLayout")))

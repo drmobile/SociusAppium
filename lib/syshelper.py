@@ -91,6 +91,7 @@ class SysHelper(unittest.TestCase, AppiumBaseHelper):
             self.logger.info(u'text of located element: {}'.format(el.text))
             if self.app_name in el.text:
                 # 1st level of setting
+                self.wait_transition(2)
                 el.click()
 
                 # 2nd level of setting
@@ -112,6 +113,7 @@ class SysHelper(unittest.TestCase, AppiumBaseHelper):
             self.logger.info(u'text of located element: {}'.format(el.text))
             if self.app_name in el.text:
                 # 1st level of setting
+                self.wait_transition(2)
                 el.click()
                 # Confirmation
                 if self.click_button_with_text(["OK", u"確定"]) is True:
