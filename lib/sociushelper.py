@@ -16,13 +16,23 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
     def click_facebook_login_button(self):
         self.click_button_with_id("btn_fb_login")
         self.wait_transition(1)
+    def click_twitter_login_button(self):
+        self.click_button_with_id("img_twitter_login")
+        self.wait_transition(1)
+    def click_google_login_button(self):
+        self.click_button_with_id("img_gplus_login")
+        self.wait_transition(1)
 
     def click_create_new_account_using_email_button(self):
-        self.click_button_with_id("create_email_account")
+        self.click_button_with_id("other_login")
+        self.wait_transition(0.5)
+        self.click_textview_with_text([u"Email註冊","Email register"])
         self.wait_transition(0.5)
 
     def click_login_by_email_link(self):
-        self.click_button_with_id("login_by_email")
+        self.click_button_with_id("other_login")
+        self.wait_transition(0.5)
+        self.click_textview_with_text([u"Email登入","Email login"])
         self.wait_transition(0.5)
 
     def start_logger_activity(self):
@@ -86,6 +96,13 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         # allow all system permissions
         self.allow_system_permissions(4)
         self.wait_transition(1)
+    def click_require_photo_permission_button(self):
+        if self.isAndroid5():
+            return
+        self.wait_transition(2)
+        self.click_textview_with_text([u"確認","Confirm"])
+        self.allow_system_permissions(1)
+        self.wait_transition(1)
 
     def click_onlinevideocard(self):
         self.click_button_with_id("iv_thumbnail")
@@ -93,7 +110,7 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.press_back_key()
 
     def click_videocard(self):
-        self.click_button_with_id("rl_post_card")
+        self.click_button_with_id("iv_screenshot")
         self.wait_transition(2)
         self.press_back_key()
 
@@ -120,10 +137,15 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.wait_transition(2)
 
     def create_account(self, displayName, soociiId, email=None, pwd=None, confirmEmail=None, confirmPwd=None):
+        self.Brosew_photo()
+        self.wait_transition(2)
         self.send_text_with_id("display_name_value", displayName)
         self.logger.info('sent display name: {}'.format(displayName))
         self.send_text_with_id("soocii_id_value", soociiId)
         self.logger.info('sent soocii id: {}'.format(soociiId))
+        self.click_textview_with_id("gender_value")
+        self.wait_transition(1)
+        self.click_textview_with_text([u"男","Male"])
         # email_value
         if email is not None:
             self.send_text_with_id("email_value", email)
@@ -137,20 +159,74 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.click_button_with_id("register")
         # transition to next page
         self.wait_transition(5)
+    def Brosew_photo(self):
+        self.click_button_with_id("avatar")
+        self.wait_transition(2)
+        self.click_textview_with_text([u"選擇照片","Browse photo"])
+        self.wait_transition(1)
+        self.click_require_photo_permission_button()
 
+        self.wait_transition(2)
+        photofold = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.widget.RelativeLayout")))
+        photofold[0].click()
+
+        self.wait_transition(1)
+        if self.isAndroid5():
+            photobtn = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.view.View")))
+            photobtn[1].click()
+        else:
+            photobtn = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.view.ViewGroup")))
+            photobtn[1].click()
+        self.wait_transition(2)
+        self.wait_transition(1)
+        #self.click_textview_with_id("action_next")
+        self.wait_transition(1)
+    def create_account_google(self):
+        self.click_textview_with_id("gender_value")
+        self.wait_transition(1)
+        self.click_textview_with_text([u"男","Male"])
+        self.wait_transition(1)
+        self.click_button_with_id("register")
+        self.wait_transition(3)
+
+
+    def Take_photo(self):
+        self.click_button_with_id("avatar")
+        self.wait_transition(2)
+        self.click_textview_with_text([u"拍攝照片","Take photo"])
+        self.wait_transition(2)
+        self.click_require_photo_permission_button()
+        self.wait_transition(2)
+        self.click_camera_shot()
+        self.wait_transition(3)
+        self.click_next()
+        self.wait_transition(1)
+        self.click_textview_with_id("action_next")
+        self.wait_transition(1)
+
+        self.wait_transition(2)
     def add_followers(self):
+        self.wait_transition(3)
+        self.click_button_with_id("add_follow_confirm")
+        self.wait_transition(5)
         self.click_button_with_id("add_follow_confirm")
         # transition to next page
         self.wait_transition(1)
-
+    def add_followers_email(self):
+        self.wait_transition(3)
+        self.click_button_with_id("add_follow_confirm")
+        # transition to next page
+        self.wait_transition(1)
     def __visibility_of_textview(self, tt):
         items = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.widget.TextView")))
         for el in items:
-            if el.text in text:
+            if el.text in tt:
                 return True
         return False
 
     def is_message(self,tt):# today
+        self.wait_transition(2)
+        self.click_button_with_id("tv_comments")
         check = self.wait.until(EC.presence_of_all_elements_located((By.ID,"tv_comment_msg")))
         cname=check[len(check)-1].text
         cname.index(tt)
@@ -211,12 +287,20 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.wait_transition(2)
         self.click_button_with_id("tv_feed")
         return
+    def swipe_to_find_friend(self):
+        self.wait_transition(2)
+        self.click_textview_with_text(u"尋找朋友")
 
     def swipe_to_friendlist(self):
+        self.wait_transition(1)
+        self.swipe_navi_menu()
         self.wait_transition(2)
-        self.click_button_with_id("iv_invite_icon")
         return
-
+    def swipe_navi_menu(self):
+        self.wait_transition(1)
+        self.click_button_with_id("navi_menu")
+        self.wait_transition(2)
+        self.click_textview_with_text(u"尋找朋友")
     def swipe_to_aboutme(self):
         self.wait_transition(2)
         self.click_textview_with_id("icon_profile")
@@ -291,7 +375,6 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
 
 
     def swipe_posts(self):
-        
         self.wait_transition(2.5)
         try:
             posts_bt = self.wait.until(EC.presence_of_element_located((By.ID,"iv_thumbnail")))
@@ -305,6 +388,10 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
     def swipe_tofind(self):
         self.wait_transition(2)
         self.swipe_up(250)
+
+    def swipe_tofind_slow(self):
+        self.wait_transition(2)
+        self.swipe_up(1000)
 
     def swipe_like(self):
         like_bt = self.wait.until(EC.presence_of_element_located((By.ID,"iv_like")))
@@ -384,7 +471,7 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.wait_transition(1.5)
 
     def get_videocard(self):
-        videocard=self.wait.until(EC.presence_of_element_located((By.ID,"rl_post_card")))
+        videocard=self.wait.until(EC.presence_of_element_located((By.ID,"iv_screenshot")))
         if videocard is None:
             return False
         else:
@@ -476,7 +563,7 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
 
                     self.wait_transition(2.5)
                     try:
-                        videonum=self.wait.until(EC.presence_of_all_elements_located((By.ID,"iv_video_play")))
+                        videonum=self.wait.until(EC.presence_of_all_elements_located((By.ID,"iv_thumbnail")))
                         vtag=self.wait.until(EC.presence_of_all_elements_located((By.ID,"tv_tag")))
                     except:
                         videonum=self.wait.until(EC.presence_of_all_elements_located((By.ID,"iv_screenshot")))
@@ -566,6 +653,16 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         if center_x == 720 : self.driver.tap([(45, 650)], 500)
         elif center_x == 1080 : self.driver.tap([(50, 980)], 500)
         else : self.driver.tap([(100, 1300)], 500)
+    def click_camera_shot(self):
+        self.wait_transition(2)
+        center_x=self.window_size["width"]*0.5
+        center_y=self.window_size["height"]*0.9
+        self.driver.tap([(center_x,center_y)],500)
+    def click_next(self):
+        self.wait_transition(2)
+        center_x=self.window_size["width"]*0.8
+        center_y=self.window_size["height"]*0.9
+        self.driver.tap([(center_x,center_y)],500)
 
 
     def click_open_fab_button(self):
@@ -661,11 +758,14 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
             return False
         return True
 
-    def check_post_title(self,text):
+    def check_post_title(self,tt):
         #check title
         postmsg=self.wait.until(EC.presence_of_element_located((By.ID,"tv_msg")))
         posttitle=postmsg.text
-        posttitle.index(text)
+        if posttitle==tt:
+            return True
+        else :
+            return False
         self.wait_transition(2)
 
     def check_post(self):
@@ -690,15 +790,15 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
     def choose_video(self):
         #choose folder
         photofolder=self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME,"android.widget.RelativeLayout")))
-        photofolder[1].click()
+        photofolder[2].click()
         self.wait_transition(2)
         #choose video
         if self.isAndroid5():
             avideo=self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME,"android.view.View")))
-            avideo[1].click()
+            avideo[0].click()
         else:
             avideo=self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME,"android.view.ViewGroup")))
-            avideo[1].click()
+            avideo[0].click()
         self.wait_transition(2)
 
     def new_local_video_post(self):
@@ -728,14 +828,14 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.wait_transition(10)
         self.swipe_refresh()
         #check title
-        self.check_post_title("upload video from local")
+        self.assertTrue(self.check_post_title("upload video from local"))
 
     def input_send_share_message(self,text):
         self.send_text_with_id("upload_edittext",text)
 
         self.wait_transition(1.5)
         self.click_textview_with_id("action_share")
-        self.wait_transition(1.5)
+        self.wait_transition(2)
         self.press_back_key()
         self.wait_transition(1)
 
@@ -933,7 +1033,7 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
 
         self.wait_transition(2)
         photofold = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.widget.RelativeLayout")))
-        photofold[0].click()
+        photofold[1].click()
 
         self.wait_transition(1)
         if self.isAndroid5():
@@ -942,15 +1042,19 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         else:
             photobtn = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.view.ViewGroup")))
             photobtn[1].click()
+        self.wait_transition(1)
+        self.click_textview_with_id("action_next")
+        self.wait_transition(1)
 
     def edit_username_and_introduction(self):
         self.wait_transition(2)
-        self.send_text_with_id("edit_display_name", "edit display name")
+        self.send_text_with_id("edit_display_name", "edit display")
 
         self.wait_transition(2)
         self.send_text_with_id("et_about", "Hello welcome to my broatcast!!!")
+        self.wait_transition(2)
 
-        self.click_button_with_id("menu_personal_info_check")
+        self.click_textview_with_id("menu_personal_info_check")
         self.wait_transition(2)
         self.swipe_refresh()
         self.swipe_refresh()

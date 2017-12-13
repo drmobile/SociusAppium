@@ -93,6 +93,19 @@ class AppiumBaseHelper():
                 txtView.click()
                 return True
         return False
+    def click_camera_with_text(self, text):
+        allTxtViews = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.widget.ImageView")))
+        for txtView in allTxtViews:
+            if txtView.text in text:
+                txtView.click()
+                return True
+            elif text[0] in txtView.text:
+                txtView.click()
+                return True
+            elif text[1] in txtView.text:
+                txtView.click()
+                return True
+        return False
 
     def click_textview_with_id(self, id):
         txtView = self.wait.until(EC.presence_of_element_located((By.ID, id)))

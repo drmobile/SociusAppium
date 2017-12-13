@@ -39,7 +39,9 @@ class otherposts(BaseTests):
 
             self.sociushelper.click_require_permission_button()
             # click friend
-            self.sociushelper.swipe_to_friendlist()
+            self.sociushelper.swipe_navi_menu()
+            self.sociushelper.swipe_to_find_friend()
+           # self.sociushelper.swipe_to_friendlist()
 
             # click searchid
             self.sociushelper.swipe_to_SearchId()
@@ -71,6 +73,7 @@ class otherposts(BaseTests):
             self.sociushelper.swpie_share_posts()#click share posts button
             self.sociushelper.swipe_share_posts_to_soocii()
             self.sociushelper.input_send_share_message("share posts testing")#input message and click send button
+            self.sociushelper.swipe_tofind()
             self.sociushelper.swipe_posts()
             share_b = self.sociushelper.check_like_num(["shares", u"個分享"])
             self.assertTrue(int(share_b)-1 == int(share_a))

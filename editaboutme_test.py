@@ -43,7 +43,9 @@ class EditaboutmeTests(BaseTests):
             #check/get fans and follow of number in aboutme
             fans_a = self.sociushelper.get_number_with_id("tv_fans_count")
             follow_a = self.sociushelper.get_number_with_id("tv_following_count")
-            self.sociushelper.swipe_to_friendlist()
+            self.sociushelper.swipe_navi_menu()
+            self.sociushelper.swipe_to_find_friend()
+          #  self.sociushelper.swipe_to_friendlist()
 
 
 
@@ -72,6 +74,7 @@ class EditaboutmeTests(BaseTests):
             # confirm to follow recommended celebrity
             #self.sociushelper.click_confirm_recommended_celebrity()
 
+            self.sociushelper.click_confirm_recommended_celebrity()
             # confirm acquiring permission dialog
             self.sociushelper.click_require_permission_button()
 
@@ -81,7 +84,7 @@ class EditaboutmeTests(BaseTests):
 
             self.sociushelper.edit_username_and_introduction()
 
-            self.sociushelper.check_text("tv_display_name", "edit display name")
+            self.sociushelper.check_text("tv_display_name", "edit display")
 
             self.sociushelper.check_text("tv_about_me", "Hello welcome to my broatcast!!!")
 
@@ -89,6 +92,7 @@ class EditaboutmeTests(BaseTests):
             self.logger.info('caught exception: {}'.format(sys.exc_info()[0]))
             self.syshelper.capture_screen("test_edit_aboutme")
             raise
+            
 
 
 

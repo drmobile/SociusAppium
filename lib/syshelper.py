@@ -52,12 +52,51 @@ class FacebookHelper(unittest.TestCase, AppiumBaseHelper):
         self.wait_transition(1)
 
         return True
+class TwitterHelper(unittest.TestCase, AppiumBaseHelper):
+    def __init__(self, driver, platformName, platformVersion):
+        AppiumBaseHelper.__init__(self, driver, platformName, platformVersion)
+
+    def login2(self, username, password):
+        bClickedLogin = False
+        bGrantedPermission = False
+
+        # wait login transition
+        self.wait_transition(2)
+
+        # Webview-based
+        allEditText = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.widget.EditText")))
+        self.assertTrue(len(allEditText)==2, 'could not identify facebook two text fields for user name and password')
+        self.assertIsNotNone(allEditText)
+        # User name field
+        el = allEditText[0]
+        self.logger.info(u'text of located element: {}'.format(el.text))
+        el.send_keys(username)
+        self.driver.hide_keyboard()
+        # Password field
+        el = allEditText[1]
+        self.logger.info(u'text of located element: {}'.format(el.text))
+        el.send_keys(password)
+        self.driver.hide_keyboard()
+
+        self.logger.info('Try to locate twitter login button by text')
+        if self.click_button_with_text([u'授權應用程式','Authorize app']) == True:
+            bClickedLogin = True
+        self.assertTrue(bClickedLogin, 'could not identify twitter login button in the page')
+
+        # wait for loading
+        self.wait_transition(4)
+        # wait for loading
+        self.wait_transition(1)
+
+        return True
+
 
 
 class SysHelper(unittest.TestCase, AppiumBaseHelper):
     def __init__(self, driver, platformName, platformVersion):
         AppiumBaseHelper.__init__(self, driver, platformName, platformVersion)
         self.fb = FacebookHelper(driver, platformName, platformVersion)
+        self.twitter=TwitterHelper(driver, platformName, platformVersion)
 
     def start_soocii(self):
         # The function does not work due to missing android:exported=”true” for the activity
@@ -91,7 +130,7 @@ class SysHelper(unittest.TestCase, AppiumBaseHelper):
             self.logger.info(u'text of located element: {}'.format(el.text))
             if self.app_name in el.text:
                 # 1st level of setting
-                self.wait_transition(2)
+                self.wait_transition(4)
                 el.click()
 
                 # 2nd level of setting
@@ -113,7 +152,7 @@ class SysHelper(unittest.TestCase, AppiumBaseHelper):
             self.logger.info(u'text of located element: {}'.format(el.text))
             if self.app_name in el.text:
                 # 1st level of setting
-                self.wait_transition(2)
+                self.wait_transition(4)
                 el.click()
                 # Confirmation
                 if self.click_button_with_text(["OK", u"確定"]) is True:
@@ -131,9 +170,11 @@ class SysHelper(unittest.TestCase, AppiumBaseHelper):
 
         if self.isAndroid5() == True:
             self.logger.info('try enable usage access in Android 5')
+            self.wait_transition(2)
             self.__enable_usage_access_sony_m4()
         else:
             self.logger.info('try enable usage access in Android 6+')
+            self.wait_transition(2)
             self.__enable_usage_access_sony_z3()
 
         # try:
@@ -168,3 +209,9 @@ class SysHelper(unittest.TestCase, AppiumBaseHelper):
     def login_facebook_account(self, username, password):
         self.logger.info('username: {}, password: {}'.format(username, password))
         self.fb.login(username, password)
+    def login_twitter_account(self, username, password):
+        self.logger.info('username: {}, password: {}'.format(username, password))
+        self.twitter.login2(username, password)
+    def login_google_account(self):
+        self.click_textview_with_text(["Dr. Booster","Dr.Booster"])
+        self.wait_transition(3)

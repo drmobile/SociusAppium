@@ -42,9 +42,10 @@ class DiscoveryAndSupportTests(BaseTests):
             expectedSoociiId=config.EXISTING_FACEBOOK_ACCOUNT1_SOOCIIID
 
             # Facebook Login button on Soocii
-            self.sociushelper.click_facebook_login_button()
-            self.syshelper.login_facebook_account(config.EXISTING_FACEBOOK_ACCOUNT1, config.EXISTING_FACEBOOK_ACCOUNT1_PWD)
-
+            #self.sociushelper.click_facebook_login_button()
+            #self.syshelper.login_facebook_account(config.EXISTING_FACEBOOK_ACCOUNT1, config.EXISTING_FACEBOOK_ACCOUNT1_PWD)
+            self.sociushelper.click_login_by_email_link()
+            self.sociushelper.login_account("channing@gmail.com", "zxasqw123")
             # confirm acquiring permission dialog
             self.sociushelper.click_require_permission_button()
 
@@ -54,7 +55,7 @@ class DiscoveryAndSupportTests(BaseTests):
             self.assertTrue(self.sociushelper.get_newsfeed_info())
 
             #check aboutme
-            self.assertTrue(self.sociushelper.check_aboutme(expectedDisplayName))
+            self.assertTrue(self.sociushelper.check_aboutme("chnnnnnnnb"))
 
             #check support
             self.assertTrue(self.sociushelper.check_support())
@@ -62,7 +63,7 @@ class DiscoveryAndSupportTests(BaseTests):
             #check friendlist
             self.assertTrue(self.sociushelper.get_friendlist_info())
 
-            self.sociushelper.swipe_to_fans()
+            #self.sociushelper.swipe_navi_menu()
 
             self.assertTrue(self.sociushelper.check_suggest())
 
