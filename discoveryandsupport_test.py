@@ -41,10 +41,9 @@ class DiscoveryAndSupportTests(BaseTests):
             expectedDisplayName=config.EMAIL_NAME
 
             # Facebook Login button on Soocii
-            #self.sociushelper.click_facebook_login_button()
-            #self.syshelper.login_facebook_account(config.EXISTING_FACEBOOK_ACCOUNT1, config.EXISTING_FACEBOOK_ACCOUNT1_PWD)
-            self.sociushelper.click_login_by_email_link()
-            self.sociushelper.login_account(config.EMAIL_ACCOUNT, config.EMAIL_PWD)
+            self.sociushelper.click_facebook_login_button()
+            self.syshelper.login_facebook_account(config.EXISTING_FACEBOOK_ACCOUNT1, config.EXISTING_FACEBOOK_ACCOUNT1_PWD)
+            
             # confirm acquiring permission dialog
             self.sociushelper.click_require_permission_button()
 
@@ -81,7 +80,7 @@ class DiscoveryAndSupportTests(BaseTests):
         sys.setdefaultencoding("utf-8")
         try:
             self.sociushelper.click_login_by_email_link()
-            self.sociushelper.login_account("channing@gmail.com", "zxasqw123")
+            self.sociushelper.login_account(config.EMAIL_ACCOUNT, config.EMAIL_PWD)
 
             self.sociushelper.click_require_permission_button()
 
@@ -112,7 +111,7 @@ class DiscoveryAndSupportTests(BaseTests):
     def test_zendesk(self):
         try:
             self.sociushelper.click_login_by_email_link()
-            self.sociushelper.login_account("channing@gmail.com", "zxasqw123")
+            self.sociushelper.login_account(config.EMAIL_ACCOUNT, config.EMAIL_PWD)
 
             self.sociushelper.click_require_permission_button()
 

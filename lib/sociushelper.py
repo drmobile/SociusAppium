@@ -16,9 +16,11 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
     def click_facebook_login_button(self):
         self.click_button_with_id("btn_fb_login")
         self.wait_transition(1)
+
     def click_twitter_login_button(self):
         self.click_button_with_id("img_twitter_login")
         self.wait_transition(1)
+
     def click_google_login_button(self):
         self.click_button_with_id("img_gplus_login")
         self.wait_transition(1)
@@ -683,17 +685,18 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         if center_x == 720 : self.driver.tap([(45, 650)], 500)
         elif center_x == 1080 : self.driver.tap([(50, 980)], 500)
         else : self.driver.tap([(100, 1300)], 500)
+
     def click_camera_shot(self):
         self.wait_transition(2)
         center_x=self.window_size["width"]*0.5
         center_y=self.window_size["height"]*0.9
         self.driver.tap([(center_x,center_y)],500)
+
     def click_next(self):
         self.wait_transition(2)
         center_x=self.window_size["width"]*0.8
         center_y=self.window_size["height"]*0.9
         self.driver.tap([(center_x,center_y)],500)
-
 
     def click_open_fab_button(self):
         self.click_button_with_id("fab_live")
@@ -933,7 +936,6 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.driver.tap([(x,y)],500)
 
     def download_live_record(self):
-
         self.click_button_with_id("tv_download")
         self.wait_transition(10)
         self.press_home_key()
@@ -1147,9 +1149,10 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.wait_transition(2)
         self.press_back_key()
 
-    def search_northrace(self):
-        self.send_text_with_id("search_field",u"北區聯賽")
+    def search_name(self,text):
+        self.send_text_with_id("search_field",text)
         self.wait_transition(2)
+        self.click_textview_with_text(u"尋找")
 
     def search_batt_game(self):
         self.send_text_with_id("search_field","batt")

@@ -35,7 +35,7 @@ class otherposts(BaseTests):
     def test_other_videopost(self):
         try:
             self.sociushelper.click_login_by_email_link()
-            self.sociushelper.login_account("channing@gmail.com", "zxasqw123")
+            self.sociushelper.login_account(config.EMAIL_ACCOUNT, config.EMAIL_PWD)
 
             self.sociushelper.click_require_permission_button()
             # click friend

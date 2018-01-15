@@ -61,7 +61,7 @@ class SearchTests(BaseTests):
             self.sociushelper.click_require_permission_button()
             # click friend
             self.sociushelper.check_search_button()
-            self.sociushelper.search_northrace()
+            self.sociushelper.search_name(u"北區聯賽")
             self.assertTrue(self.sociushelper.check_northrace())
         except:
             self.logger.info('caught exception: {}'.format(sys.exc_info()[0]))
