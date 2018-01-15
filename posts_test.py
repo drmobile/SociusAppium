@@ -37,7 +37,7 @@ class PostsTests(BaseTests):
         try:
 
             self.sociushelper.click_login_by_email_link()
-            self.sociushelper.login_account("channing@gmail.com", "zxasqw123")
+            self.sociushelper.login_account(config.EMAIL_ACCOUNT, config.EMAIL_PWD)
 
             self.sociushelper.click_require_permission_button()
 
@@ -64,7 +64,7 @@ class PostsTests(BaseTests):
         try:
             nofile()
             self.sociushelper.click_login_by_email_link()
-            self.sociushelper.login_account("channing@gmail.com", "zxasqw123")
+            self.sociushelper.login_account(config.EMAIL_ACCOUNT, config.EMAIL_PWD)
 
             self.sociushelper.click_require_permission_button()
 
@@ -84,14 +84,14 @@ class PostsTests(BaseTests):
     def test_comments(self):
         try:
             self.sociushelper.click_login_by_email_link()
-            self.sociushelper.login_account("channing@gmail.com", "zxasqw123")
+            self.sociushelper.login_account(config.EMAIL_ACCOUNT, config.EMAIL_PWD)
 
             self.sociushelper.click_require_permission_button()
 
             self.sociushelper.swipe_to_aboutme()
             self.sociushelper.swipe_loading()
-            self.sociushelper.swipe_posts()#into  single posts
             check_a = self.sociushelper.check_like_num(["like", u"個棒"]) # (a) to get like of number
+
             self.sociushelper.swipe_like()#click like
             check_b = self.sociushelper.check_like_num(["like", u"個棒"]) # (b) to get like of number
             self.assertTrue(check_b > check_a) #After click like_bt , compare (a) with (b) count whether +1
@@ -109,12 +109,12 @@ class PostsTests(BaseTests):
     def test_share_posts(self):
         try:
             self.sociushelper.click_login_by_email_link()
-            self.sociushelper.login_account("channing@gmail.com", "zxasqw123")
+            self.sociushelper.login_account(config.EMAIL_ACCOUNT, config.EMAIL_PWD)
             self.sociushelper.click_require_permission_button()
 
             self.sociushelper.swipe_to_aboutme()
             self.sociushelper.swipe_loading()
-            self.sociushelper.swipe_posts()#click share button
+            #self.sociushelper.swipe_posts()#click share button
             self.sociushelper.swpie_share_posts()#click share posts button
             self.sociushelper.swipe_share_posts_to_soocii()
 
@@ -139,7 +139,7 @@ class PostsTests(BaseTests):
             nofile()#delete all file
 
             self.sociushelper.click_login_by_email_link()
-            self.sociushelper.login_account("channing@gmail.com", "zxasqw123")
+            self.sociushelper.login_account(config.EMAIL_ACCOUNT, config.EMAIL_PWD)
 
             self.sociushelper.click_require_permission_button()
 
@@ -167,7 +167,7 @@ class PostsTests(BaseTests):
             nofile()#clear all file
 
             self.sociushelper.click_login_by_email_link()
-            self.sociushelper.login_account("channing@gmail.com", "zxasqw123")
+            self.sociushelper.login_account(config.EMAIL_ACCOUNT, config.EMAIL_PWD)
             self.sociushelper.click_require_permission_button()
             havefile()#put file to test case (photo and viedo)
             self.sociushelper.waitii()
@@ -191,7 +191,7 @@ class PostsTests(BaseTests):
     def test_share_posts_to_otherapp(self):
         try:
             self.sociushelper.click_login_by_email_link()
-            self.sociushelper.login_account("channing@gmail.com", "zxasqw123")
+            self.sociushelper.login_account(config.EMAIL_ACCOUNT, config.EMAIL_PWD)
 
             # confirm acquiring permission dialog
             self.sociushelper.click_require_permission_button()

@@ -135,5 +135,3 @@ class EmailAccountTests(BaseTests):
         finally:
             # delete the account for next time
             self.sociushelper.click_delete_account_button()
-
-    # TODO: create existing email account
