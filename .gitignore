@@ -97,3 +97,6 @@ config.py
 # Others
 *.apk
 
+# node package
+node_modules/
+package-lock.json
