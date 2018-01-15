@@ -90,8 +90,8 @@ class PostsTests(BaseTests):
 
             self.sociushelper.swipe_to_aboutme()
             self.sociushelper.swipe_loading()
-            self.sociushelper.swipe_posts()#into  single posts
             check_a = self.sociushelper.check_like_num(["like", u"個棒"]) # (a) to get like of number
+
             self.sociushelper.swipe_like()#click like
             check_b = self.sociushelper.check_like_num(["like", u"個棒"]) # (b) to get like of number
             self.assertTrue(check_b > check_a) #After click like_bt , compare (a) with (b) count whether +1
@@ -114,7 +114,7 @@ class PostsTests(BaseTests):
 
             self.sociushelper.swipe_to_aboutme()
             self.sociushelper.swipe_loading()
-            self.sociushelper.swipe_posts()#click share button
+            #self.sociushelper.swipe_posts()#click share button
             self.sociushelper.swpie_share_posts()#click share posts button
             self.sociushelper.swipe_share_posts_to_soocii()
 

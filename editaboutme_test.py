@@ -43,8 +43,7 @@ class EditaboutmeTests(BaseTests):
             #check/get fans and follow of number in aboutme
             fans_a = self.sociushelper.get_number_with_id("tv_fans_count")
             follow_a = self.sociushelper.get_number_with_id("tv_following_count")
-            self.sociushelper.swipe_navi_menu()
-            self.sociushelper.swipe_to_find_friend()
+            self.sociushelper.swipe_to_friendlist()
           #  self.sociushelper.swipe_to_friendlist()
 
 

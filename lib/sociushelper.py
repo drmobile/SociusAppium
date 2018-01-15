@@ -105,13 +105,14 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.wait_transition(1)
 
     def click_onlinevideocard(self):
-        self.click_button_with_id("iv_thumbnail")
+        self.click_button_with_id("iv_screenshot")
         self.wait_transition(2)
         self.press_back_key()
 
     def click_videocard(self):
-        self.click_button_with_id("iv_screenshot")
+        self.click_button_with_id("post_right_top")
         self.wait_transition(2)
+        self.press_back_key()
         self.press_back_key()
 
     def click_comment(self):
@@ -178,17 +179,7 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
             photobtn = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.view.ViewGroup")))
             photobtn[1].click()
         self.wait_transition(2)
-        self.wait_transition(1)
-        #self.click_textview_with_id("action_next")
-        self.wait_transition(1)
-    def create_account_google(self):
-        self.click_textview_with_id("gender_value")
-        self.wait_transition(1)
-        self.click_textview_with_text([u"男","Male"])
-        self.wait_transition(1)
-        self.click_button_with_id("register")
-        self.wait_transition(3)
-
+        self.click_textview_with_id("action_next")
 
     def Take_photo(self):
         self.click_button_with_id("avatar")
@@ -293,14 +284,11 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
 
     def swipe_to_friendlist(self):
         self.wait_transition(1)
-        self.swipe_navi_menu()
-        self.wait_transition(2)
-        return
-    def swipe_navi_menu(self):
-        self.wait_transition(1)
         self.click_button_with_id("navi_menu")
         self.wait_transition(2)
         self.click_textview_with_text(u"尋找朋友")
+        self.wait_transition(0.5)
+
     def swipe_to_aboutme(self):
         self.wait_transition(2)
         self.click_textview_with_id("icon_profile")
@@ -319,9 +307,11 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.click_textview_with_text(["Suggest",u"用戶推薦"])
 
     def swipe_to_SearchId(self):
+        self.press_back_key()
         self.wait_transition(2)
-        self.click_textview_with_text([u"ID搜尋","ID Search"])
-
+        self.click_button_with_id("iv_search_icon")
+        self.wait_transition(2)
+        self.click_textview_with_text(u"用戶")
     def swipe_to_faq(self):
         self.wait_transition(2)
         self.click_textview_with_id("rl_faq")
@@ -394,14 +384,13 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.swipe_up(1000)
 
     def swipe_like(self):
-        like_bt = self.wait.until(EC.presence_of_element_located((By.ID,"iv_like")))
-        like_bt.click()
+        self.wait_transition(1)
+        self.click_button_with_id("iv_like")
         self.wait_transition(1)
 
 
     def swipe_and_send_message(self,text):
-        message_bt = self.wait.until(EC.presence_of_element_located((By.ID,"message_edit_text")))
-        message_bt.click()
+        self.click_button_with_id("tv_comments")
         self.wait_transition(1)
         self.send_text_with_id("message_edit_text",text)
         self.wait_transition(1.5)
@@ -461,10 +450,10 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
             return True
 
     def get_idsearch(self,text):
-        self.send_text_with_id("input_soocii_id_text",text)
+        self.send_text_with_id("search_field",text)
         self.wait_transition(1.5)
-
-
+        self.click_textview_with_text(text)
+        self.wait_transition(1)
 
     def go_back(self):
         self.press_back_key()
@@ -549,6 +538,27 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         else:
             return True
 
+    def check_game_tag(self):
+        tag =self.wait.until(EC.presence_of_all_elements_located((By.ID,"tag")))
+        if tag is None:
+            return False
+        else:
+            return True
+
+    def check_tag_num(self):
+        tag =self.wait.until(EC.presence_of_all_elements_located((By.ID,"tag_name")))
+        if len(tag) <5:
+            return False
+        else:
+            return True
+
+    def check_result_game_tag(self):
+        tag =self.wait.until(EC.presence_of_all_elements_located((By.ID,"iv_thumbnail")))
+        if tag is None:
+            return False
+        else:
+            return True
+
     def check_hashtag(self):
 
         items = self.wait.until(EC.presence_of_all_elements_located((By.ID,"text")))
@@ -585,10 +595,30 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
             items = self.wait.until(EC.presence_of_all_elements_located((By.ID,"text")))
             if str(d[len(d)-1]) == items[len(items)-1].text:
                 return True
-            
 
-            
-            
+    def check_section(self):
+        self.click_button_with_id("tv_call_to_action")
+        self.wait_transition(2)
+        section = self.wait.until(EC.presence_of_all_elements_located((By.ID,"rl_post_card")))
+        if section is None:
+            return False
+        else:
+            return True
+
+    def check_search_username(self):
+        name =self.wait.until(EC.presence_of_all_elements_located((By.ID,"soocii_id")))
+        if name is None:
+            return False
+        else:
+            return True
+    def check_northrace(self):
+        self.click_textview_with_text(u"北區聯賽")
+        tag =self.wait.until(EC.presence_of_all_elements_located((By.ID,"iv_thumbnail")))
+        if tag is None:
+            return False
+        else:
+            return True
+
     def check_zendesk(self):
         self.assertTrue(self.is_FAQ())
         self.assertTrue(self.is_Contact())
@@ -686,7 +716,8 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
 
     def click_searchid(self,text):
         self.get_idsearch(text)
-        self.click_button_with_id("fans_list_photo_image_view")
+        self.click_textview_with_text(u"搜尋")
+        self.click_button_with_id("display_name")
         self.wait_transition(2)
 
     def click_video_pause(self):
@@ -769,10 +800,7 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.wait_transition(2)
 
     def check_post(self):
-        #click post
-        postcard=self.wait.until(EC.presence_of_all_elements_located((By.ID,"iv_thumbnail")))
-        postcard[0].click()
-        self.wait_transition(2)
+        self.wait_transition(1)
         #click sandwish button
         self.swipe_post_sandwish()
         self.wait_transition(1)
@@ -1029,11 +1057,12 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.click_button_with_id("iv_avatar")
 
         self.wait_transition(2)
+       # self.Brosew_photo()
         self.click_textview_with_text([u"選擇照片","Browse photo"])
 
         self.wait_transition(2)
         photofold = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.widget.RelativeLayout")))
-        photofold[1].click()
+        photofold[0].click()
 
         self.wait_transition(1)
         if self.isAndroid5():
@@ -1042,8 +1071,9 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         else:
             photobtn = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.view.ViewGroup")))
             photobtn[1].click()
-        self.wait_transition(1)
-        self.click_textview_with_id("action_next")
+        self.wait_transition(5)
+       # self.click_textview_with_id("action_next")
+        self.click_textview_with_text([u"下一步","next"])
         self.wait_transition(1)
 
     def edit_username_and_introduction(self):
@@ -1095,3 +1125,34 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
                 self.swipe_down(500)
                 return True
         return False
+
+    def check_search_button(self):
+        self.click_button_with_id("iv_search_icon")
+        self.wait_transition(2)
+
+    def check_result_tag(self):
+        self.click_textview_with_id("tag_name")
+        self.wait_transition(5)
+
+    def check_result_tag_share(self):
+        self.click_button_with_id("action_share")
+        self.wait_transition(3)
+        self.press_back_key()
+        self.press_back_key()
+
+    def check_search_user_button(self):
+        self.click_textview_with_text(u"用戶")
+        self.wait_transition(2)
+        self.click_textview_with_text("battle")
+        self.wait_transition(2)
+        self.press_back_key()
+
+    def search_northrace(self):
+        self.send_text_with_id("search_field",u"北區聯賽")
+        self.wait_transition(2)
+
+    def search_batt_game(self):
+        self.send_text_with_id("search_field","batt")
+        self.wait_transition(1)
+        self.click_button_with_id("search_button")
+        self.wait_transition(1)

@@ -36,20 +36,15 @@ logger.setLevel(logging.INFO)
 
 
 class AnotherAccountTests(BaseTests):
-    # Login with existing facebook account and enable usage access once
+    # Login with existing twitter account 
     @pytest.mark.first
     def test_login_new_twitter_account(self):
         try:
-            expectedDisplayName=config.EXISTING_FACEBOOK_ACCOUNT1_DISPLAYNAME
-            expectedSoociiId=config.EXISTING_FACEBOOK_ACCOUNT1_SOOCIIID
-
-            
-
             accounthelper = AccountHelper()
             expectedDisplayName2=accounthelper.name
             expectedSoociiId2=accounthelper.name
 
-            # Facebook Login button on Soocii
+            # Twitter Login button on Soocii
             self.sociushelper.click_twitter_login_button()
             self.syshelper.login_twitter_account(config.TWITTER_ACCOUNT, config.TWITTER_ACCOUNT_PWD)
 
@@ -88,13 +83,12 @@ class AnotherAccountTests(BaseTests):
             # delete the account for next time
             self.sociushelper.click_delete_account_button()
 
-    # Login with new facebook account who friend with existing facebook/soocii account
     def test_login_new_google_account(self):
         try:
             expectedDisplayName=config.NEW_GOOGLE_ACCOUNT_NAME
             expectedSoociiId=config.NEW_GOOGLE_ACCOUNT_ID
 
-            # Facebook Login button on Soocii
+            # google Login button on Soocii
             self.sociushelper.click_google_login_button()
             self.syshelper.login_google_account()
 
@@ -126,11 +120,9 @@ class AnotherAccountTests(BaseTests):
                 u"expect value {}, but return unexpected {}".format(expectedSoociiId, soociiId))
         except:
             self.logger.info('caught exception: {}'.format(sys.exc_info()[0]))
-            self.syshelper.capture_screen("test_login_new_facebook_account")
+            self.syshelper.capture_screen("test_login_new_google_account")
             raise
         finally:
             # delete the account for next time
             self.sociushelper.click_delete_account_button()
-
-    # TODO: Login with new facebook account who does NOT friend with any facebook/soocii account
 

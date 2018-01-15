@@ -38,14 +38,13 @@ class DiscoveryAndSupportTests(BaseTests):
     """docstring for DiscoveryAndSupportTests"""
     def test_allpage(self):
         try:
-            expectedDisplayName=config.EXISTING_FACEBOOK_ACCOUNT1_DISPLAYNAME
-            expectedSoociiId=config.EXISTING_FACEBOOK_ACCOUNT1_SOOCIIID
+            expectedDisplayName=config.EMAIL_NAME
 
             # Facebook Login button on Soocii
             #self.sociushelper.click_facebook_login_button()
             #self.syshelper.login_facebook_account(config.EXISTING_FACEBOOK_ACCOUNT1, config.EXISTING_FACEBOOK_ACCOUNT1_PWD)
             self.sociushelper.click_login_by_email_link()
-            self.sociushelper.login_account("channing@gmail.com", "zxasqw123")
+            self.sociushelper.login_account(config.EMAIL_ACCOUNT, config.EMAIL_PWD)
             # confirm acquiring permission dialog
             self.sociushelper.click_require_permission_button()
 
@@ -55,7 +54,7 @@ class DiscoveryAndSupportTests(BaseTests):
             self.assertTrue(self.sociushelper.get_newsfeed_info())
 
             #check aboutme
-            self.assertTrue(self.sociushelper.check_aboutme("chnnnnnnnb"))
+            self.assertTrue(self.sociushelper.check_aboutme(expectedDisplayName))
 
             #check support
             self.assertTrue(self.sociushelper.check_support())
@@ -102,7 +101,7 @@ class DiscoveryAndSupportTests(BaseTests):
             self.sociushelper.swipe_refresh()
             self.sociushelper.swipe_refresh()
 
-            self.sociushelper.check_hashtag()
+            self.assertTrue(self.sociushelper.check_section())
 
 
         except Exception as e:

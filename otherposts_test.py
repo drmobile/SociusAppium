@@ -39,8 +39,8 @@ class otherposts(BaseTests):
 
             self.sociushelper.click_require_permission_button()
             # click friend
-            self.sociushelper.swipe_navi_menu()
-            self.sociushelper.swipe_to_find_friend()
+           # self.sociushelper.swipe_navi_menu()
+           # self.sociushelper.swipe_to_find_friend()
            # self.sociushelper.swipe_to_friendlist()
 
             # click searchid
@@ -49,13 +49,7 @@ class otherposts(BaseTests):
             self.sociushelper.click_searchid("channing")
             # click videocard
             self.sociushelper.swipe_tofind()
-            self.sociushelper.swipe_posts()
-            # check video unit
-            self.assertTrue(self.sociushelper.check_video_unit())
 
-            # check video time line
-            self.sociushelper.click_video_pause()
-            # check like
             check_a = self.sociushelper.check_like_num(["like", u"個棒"]) # (a) to get like of number
             self.sociushelper.swipe_like()#click like
             check_b = self.sociushelper.check_like_num(["like", u"個棒"]) # (b) to get like of number
@@ -63,7 +57,6 @@ class otherposts(BaseTests):
             self.sociushelper.swipe_like()#keep like
 
             # into msg & key in msg
-            self.sociushelper.swipe_to_msg()
             self.sociushelper.swipe_and_send_message("this is msg testing")#input message to share_EditText ,and click send button
             self.sociushelper.is_message("this is msg testing")
             self.syshelper.press_back_key()

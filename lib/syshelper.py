@@ -52,6 +52,7 @@ class FacebookHelper(unittest.TestCase, AppiumBaseHelper):
         self.wait_transition(1)
 
         return True
+
 class TwitterHelper(unittest.TestCase, AppiumBaseHelper):
     def __init__(self, driver, platformName, platformVersion):
         AppiumBaseHelper.__init__(self, driver, platformName, platformVersion)
@@ -209,9 +210,12 @@ class SysHelper(unittest.TestCase, AppiumBaseHelper):
     def login_facebook_account(self, username, password):
         self.logger.info('username: {}, password: {}'.format(username, password))
         self.fb.login(username, password)
+
     def login_twitter_account(self, username, password):
         self.logger.info('username: {}, password: {}'.format(username, password))
         self.twitter.login2(username, password)
+        
     def login_google_account(self):
-        self.click_textview_with_text(["Dr. Booster","Dr.Booster"])
+        self.wait_transition(1)
+        self.click_textview_with_text(["Dr. Booster","Dr. Booster"])
         self.wait_transition(3)
