@@ -35,13 +35,13 @@ class SearchTests(BaseTests):
     def test_search_game_user(self):
         try:
             self.sociushelper.click_login_by_email_link()
-            self.sociushelper.login_account("channing@gmail.com", "zxasqw123")
+            self.sociushelper.login_account(config.EMAIL_ACCOUNT, config.EMAIL_PWD)
 
             self.sociushelper.click_require_permission_button()
             # click search
             self.sociushelper.check_search_button()
             self.assertTrue(self.sociushelper.check_game_tag())
-            self.sociushelper.search_batt_game()
+            self.sociushelper.search_name("batt")
             self.assertTrue(self.sociushelper.check_tag_num())
             self.sociushelper.check_result_tag()
             self.assertTrue(self.sociushelper.check_result_game_tag())
@@ -56,7 +56,7 @@ class SearchTests(BaseTests):
     def test_search_northrace(self):
         try:
             self.sociushelper.click_login_by_email_link()
-            self.sociushelper.login_account("channing@gmail.com", "zxasqw123")
+            self.sociushelper.login_account(config.EMAIL_ACCOUNT, config.EMAIL_PWD)
 
             self.sociushelper.click_require_permission_button()
             # click friend
