@@ -46,6 +46,7 @@ class EmailAccountTests(BaseTests):
 
             # flow to create new account
             self.sociushelper.create_account(
+                                 1,
                 accounthelper.name,
                 accounthelper.name,
                 accounthelper.email,
@@ -91,6 +92,7 @@ class EmailAccountTests(BaseTests):
 
             # flow to create new account
             self.sociushelper.create_account(
+                1,
                 accounthelper.name,
                 accounthelper.name,
                 accounthelper.email,

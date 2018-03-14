@@ -49,6 +49,7 @@ class AnotherAccountTests(BaseTests):
             self.syshelper.login_twitter_account(config.TWITTER_ACCOUNT, config.TWITTER_ACCOUNT_PWD)
 
             self.sociushelper.create_account(
+                                   1,
                 expectedDisplayName2,
                 expectedSoociiId2,
                 accounthelper.email)
@@ -74,7 +75,7 @@ class AnotherAccountTests(BaseTests):
                 u"expect value {}, but return unexpected {}".format(expectedDisplayName2, displayName))
             self.assertTrue(expectedSoociiId2==soociiId,
                 u"expect value {}, but return unexpected {}".format(expectedSoociiId2, soociiId))
-            # don't delete the account
+
         except:
             self.logger.info('caught exception: {}'.format(sys.exc_info()[0]))
             self.syshelper.capture_screen("test_twitter_createaccount")
@@ -94,6 +95,7 @@ class AnotherAccountTests(BaseTests):
 
             # flow to create new account
             self.sociushelper.create_account(
+                                             2,
                 config.NEW_GOOGLE_ACCOUNT_NAME,
                 config.NEW_GOOGLE_ACCOUNT_ID
                 )

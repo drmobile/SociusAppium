@@ -38,7 +38,7 @@ class DiscoveryAndSupportTests(BaseTests):
     """docstring for DiscoveryAndSupportTests"""
     def test_allpage(self):
         try:
-            expectedDisplayName=config.EMAIL_NAME
+            expectedDisplayName=config.EXISTING_FACEBOOK_ACCOUNT1_DISPLAYNAME
 
             # Facebook Login button on Soocii
             self.sociushelper.click_facebook_login_button()
