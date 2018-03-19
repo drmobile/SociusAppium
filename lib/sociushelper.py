@@ -719,7 +719,7 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.wait_transition(2)
 
     def click_viedo_to_share(self):#today
-        self.swipe_aboutme_video()#click video
+        self.swipe_newsfeed_video()#click video
 
         self.click_button_with_id("btn_trim_complete")
         self.wait_transition(1)
