@@ -49,7 +49,6 @@ class AnotherAccountTests(BaseTests):
             self.syshelper.login_twitter_account(config.TWITTER_ACCOUNT, config.TWITTER_ACCOUNT_PWD)
 
             self.sociushelper.create_account(
-                                   1,
                 expectedDisplayName2,
                 expectedSoociiId2,
                 accounthelper.email)
@@ -95,7 +94,6 @@ class AnotherAccountTests(BaseTests):
 
             # flow to create new account
             self.sociushelper.create_account(
-                                             2,
                 config.NEW_GOOGLE_ACCOUNT_NAME,
                 config.NEW_GOOGLE_ACCOUNT_ID
                 )

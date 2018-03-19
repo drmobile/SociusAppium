@@ -144,8 +144,8 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         # transition to next page
         self.wait_transition(2)
 
-    def create_account(self, check,displayName, soociiId, email=None, pwd=None, confirmEmail=None, confirmPwd=None):
-        self.Brosew_photo(check)
+    def create_account(self,displayName, soociiId, email=None, pwd=None, confirmEmail=None, confirmPwd=None):
+        self.Brosew_photo()
         self.wait_transition(2)
         self.send_text_with_id("display_name_value", displayName)
         self.logger.info('sent display name: {}'.format(displayName))
@@ -167,18 +167,19 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.click_button_with_id("register")
         # transition to next page
         self.wait_transition(5)
-    def Brosew_photo(self,check):
+    def Brosew_photo(self):
         self.click_button_with_id("avatar")
         self.wait_transition(2)
         self.click_textview_with_text([u"選擇照片","Browse photo"])
         self.wait_transition(1)
         self.click_require_photo_permission_button()
 
-        if check == 2:
+        if self.is_album()==False : #check whether in the album
             self.click_button_with_id("avatar")
             self.wait_transition(2)
             self.click_textview_with_text([u"選擇照片","Browse photo"])
             self.wait_transition(1)
+
 
         self.wait_transition(2)
         photofold = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.widget.RelativeLayout")))
@@ -234,6 +235,9 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         check = self.wait.until(EC.presence_of_all_elements_located((By.ID,"tv_comment_msg")))
         cname=check[len(check)-1].text
         cname.index(tt)
+
+    def is_album(self):
+        return self.__visibility_of_textview(["Select photo", u"選取相片"])
 
     def is_discover(self):
         return self.__visibility_of_textview(["Discovery", u"探索"])
@@ -412,7 +416,7 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
 
 
 
-    def swipe_aboutme_video(self):
+    def swipe_newsfeed_video(self):
         video_bt = self.wait.until(EC.presence_of_all_elements_located((By.ID,"iv_video")))
         if video_bt is None:
             return False

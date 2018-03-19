@@ -96,7 +96,7 @@ class FacebookAccountTests(BaseTests):
             self.syshelper.login_facebook_account(config.NEW_FACEBOOK_ACCOUNT1, config.NEW_FACEBOOK_ACCOUNT1_PWD)
 
             # flow to create new account
-            self.sociushelper.create_account(1,expectedDisplayName, expectedSoociiId)
+            self.sociushelper.create_account(expectedDisplayName, expectedSoociiId)
             self.sociushelper.add_followers()
 
             # confirm acquiring permission dialog
