@@ -58,6 +58,8 @@ def opensnakeoff():
     subprocess.Popen(['adb', 'shell','monkey', '-p','com.wepie.snakeoff' ,'-c', 'android.intent.category.LAUNCHER 1'])
 def opensoocii():
     subprocess.Popen(['adb', 'shell','monkey', '-p','me.soocii.socius.staging' ,'-c', 'android.intent.category.LAUNCHER 1'])
+def clear_web_facebook_data():
+    subprocess.Popen(['adb','shell','pm','clear','com.android.chrome'])
 
 
 class BaseTests(unittest.TestCase):

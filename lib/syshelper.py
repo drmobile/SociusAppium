@@ -15,41 +15,55 @@ class FacebookHelper(unittest.TestCase, AppiumBaseHelper):
     def login(self, username, password):
         bClickedLogin = False
         bGrantedPermission = False
+        bContinue=False
 
         # wait login transition
-        self.wait_transition(2)
-
-        # Webview-based
-        allEditText = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.widget.EditText")))
-        self.assertTrue(len(allEditText)==2, 'could not identify facebook two text fields for user name and password')
-        self.assertIsNotNone(allEditText)
-        # User name field
-        el = allEditText[0]
-        self.logger.info(u'text of located element: {}'.format(el.text))
-        el.send_keys(username)
-        self.driver.hide_keyboard()
-        # Password field
-        el = allEditText[1]
-        self.logger.info(u'text of located element: {}'.format(el.text))
-        el.send_keys(password)
-        self.driver.hide_keyboard()
-
-        self.logger.info('Try to locate facebook login button by text')
-        if self.click_button_with_text([u'登入']) == True:
-            bClickedLogin = True
-        self.assertTrue(bClickedLogin, 'could not identify facebook login button in the page')
-
-        # wait for loading
         self.wait_transition(4)
+        if self.click_button_with_text([u'繼續']) == True:
+            bContinue=True
 
-        # grant facebook permission
-        self.logger.info('Try to locate facebook permission button by text')
-        if self.click_button_with_text([u'繼續', u'確定']) == True:
-            bGrantedPermission = True
-        self.assertTrue(bGrantedPermission, 'could not identify facebook grant permission button in the page')
+            return True
 
-        # wait for loading
-        self.wait_transition(1)
+        if bContinue !=True:    
+        # Webview-based
+            allEditText = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.widget.EditText")))
+
+            self.logger.info(len(allEditText))
+
+            self.assertTrue(len(allEditText)==2, 'could not identify facebook two text fields for user name and password')
+            self.assertIsNotNone(allEditText)
+            # User name field
+            el = allEditText[0]
+            self.logger.info(u'text of located element: {}'.format(el.text))
+            el.clear()
+            el.send_keys(username)
+            self.driver.hide_keyboard()
+
+            #if self.click_button_with_text([u'登入']) == True:
+                #bClickedLogin = True
+
+            # Password field
+            el = allEditText[1]
+            self.logger.info(u'text of located element: {}'.format(el.text))
+            el.send_keys(password)
+            self.driver.hide_keyboard()
+
+            self.logger.info('Try to locate facebook login button by text')
+            if self.click_button_with_text([u'登入']) == True:
+                bClickedLogin = True
+            self.assertTrue(bClickedLogin, 'could not identify facebook login button in the page')
+
+            # wait for loading
+            self.wait_transition(4)
+
+            # grant facebook permission
+            self.logger.info('Try to locate facebook permission button by text')
+            if self.click_button_with_text([u'繼續', u'確定']) == True:
+                bGrantedPermission = True
+            self.assertTrue(bGrantedPermission, 'could not identify facebook grant permission button in the page')
+
+            # wait for loading
+            self.wait_transition(1)
 
         return True
 
@@ -192,6 +206,7 @@ class SysHelper(unittest.TestCase, AppiumBaseHelper):
     def enable_draw_on_top_layer(self):
         # click on confirm "請選擇允許在其他應用程式上層繪製內容，並將其打開"
         # only require for Android6+
+        self.wait_transition(3)
         if self.isAndroid5():
             return
         self.click_textview_with_id("confirm")
@@ -219,3 +234,9 @@ class SysHelper(unittest.TestCase, AppiumBaseHelper):
         self.wait_transition(1)
         self.click_textview_with_text(["Dr. Booster","Dr. Booster"])
         self.wait_transition(3)
+    def Facebook_clear_data_step(self):
+        self.wait_transition(2)
+        self.click_button_with_text(u"接受並繼續")
+        self.click_button_with_text(u"繼續")
+        self.click_button_with_text(u"好，我知道了")
+        self.wait_transition(5)

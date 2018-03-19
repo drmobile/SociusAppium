@@ -44,7 +44,9 @@ class FacebookAccountTests(BaseTests):
             expectedSoociiId=config.EXISTING_FACEBOOK_ACCOUNT1_SOOCIIID
 
             # Facebook Login button on Soocii
+            clear_web_facebook_data()
             self.sociushelper.click_facebook_login_button()
+            self.syshelper.Facebook_clear_data_step()
             self.syshelper.login_facebook_account(config.EXISTING_FACEBOOK_ACCOUNT1, config.EXISTING_FACEBOOK_ACCOUNT1_PWD)
 
             # confirm acquiring permission dialog
@@ -88,7 +90,9 @@ class FacebookAccountTests(BaseTests):
             expectedSoociiId=config.NEW_FACEBOOK_ACCOUNT1_SOOCIIID
 
             # Facebook Login button on Soocii
+            clear_web_facebook_data()
             self.sociushelper.click_facebook_login_button()
+            self.syshelper.Facebook_clear_data_step()
             self.syshelper.login_facebook_account(config.NEW_FACEBOOK_ACCOUNT1, config.NEW_FACEBOOK_ACCOUNT1_PWD)
 
             # flow to create new account

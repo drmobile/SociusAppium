@@ -74,7 +74,7 @@ class AnotherAccountTests(BaseTests):
                 u"expect value {}, but return unexpected {}".format(expectedDisplayName2, displayName))
             self.assertTrue(expectedSoociiId2==soociiId,
                 u"expect value {}, but return unexpected {}".format(expectedSoociiId2, soociiId))
-            # don't delete the account
+
         except:
             self.logger.info('caught exception: {}'.format(sys.exc_info()[0]))
             self.syshelper.capture_screen("test_twitter_createaccount")

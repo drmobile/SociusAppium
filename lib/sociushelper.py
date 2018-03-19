@@ -14,12 +14,13 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         AppiumBaseHelper.__init__(self, driver, platformName, platformVersion)
 
     def click_facebook_login_button(self):
-        self.click_button_with_id("btn_fb_login")
+        self.wait_transition(1)
+        self.click_button_with_id("img_facebook_login")
         self.wait_transition(1)
 
     def click_twitter_login_button(self):
         self.click_button_with_id("img_twitter_login")
-        self.wait_transition(1)
+        self.wait_transition(3)
 
     def click_google_login_button(self):
         self.click_button_with_id("img_gplus_login")
@@ -40,9 +41,11 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
     def start_logger_activity(self):
         # The function does not work due to missing android:exported=”true” for the activity
         # self.driver.start_activity('me.soocii.socius.staging', 'me.soocii.socius.core.logger.LogCaptureActivity')
+        self.click_button_with_id("navi_menu")
+        self.wait_transition(1)
         el = self.wait.until(EC.presence_of_element_located((By.ID, "tv_app_version")))
         self.assertIsNotNone(el)
-        for i in range(1, 6): el.click()
+        for i in range(1, 12): el.click()
         self.driver.open_notifications()
         self.wait_transition(1)
         # Click on "Soocii Logger" or expand Soocii notification
@@ -76,7 +79,9 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
 
     def click_delete_account_button(self):
         self.start_logger_activity()
+        self.wait_transition(3)
         self.click_button_with_id("btn_delete_account")
+        self.wait_transition(2)
 
     def click_delete_and_revoke_account_button(self):
         self.start_logger_activity()
@@ -139,7 +144,7 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         # transition to next page
         self.wait_transition(2)
 
-    def create_account(self, displayName, soociiId, email=None, pwd=None, confirmEmail=None, confirmPwd=None):
+    def create_account(self,displayName, soociiId, email=None, pwd=None, confirmEmail=None, confirmPwd=None):
         self.Brosew_photo()
         self.wait_transition(2)
         self.send_text_with_id("display_name_value", displayName)
@@ -168,6 +173,13 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.click_textview_with_text([u"選擇照片","Browse photo"])
         self.wait_transition(1)
         self.click_require_photo_permission_button()
+
+        if self.is_album()==False : #check whether in the album
+            self.click_button_with_id("avatar")
+            self.wait_transition(2)
+            self.click_textview_with_text([u"選擇照片","Browse photo"])
+            self.wait_transition(1)
+
 
         self.wait_transition(2)
         photofold = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.widget.RelativeLayout")))
@@ -223,6 +235,9 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         check = self.wait.until(EC.presence_of_all_elements_located((By.ID,"tv_comment_msg")))
         cname=check[len(check)-1].text
         cname.index(tt)
+
+    def is_album(self):
+        return self.__visibility_of_textview(["Select photo", u"選取相片"])
 
     def is_discover(self):
         return self.__visibility_of_textview(["Discovery", u"探索"])
@@ -287,7 +302,7 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
     def swipe_to_friendlist(self):
         self.wait_transition(1)
         self.click_button_with_id("navi_menu")
-        self.wait_transition(2)
+        self.wait_transition(3)
         self.click_textview_with_text(u"尋找朋友")
         self.wait_transition(0.5)
 
@@ -401,11 +416,13 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
 
 
 
-    def swipe_aboutme_video(self):
+    def swipe_newsfeed_video(self):
         video_bt = self.wait.until(EC.presence_of_all_elements_located((By.ID,"iv_video")))
         if video_bt is None:
             return False
         video_bt[0].click()
+        self.wait_transition(0.5)
+        self.click_textview_with_text(u"編輯")
         self.wait_transition(2)
 
     def swipe_videounit(self):
@@ -480,7 +497,6 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         return False
 
     def check_share_otherapp_posts(self):
-        self.swipe_posts()
         self.swpie_share_posts()
         self.swipe_share_posts_to_otherapp()
         try:
@@ -703,7 +719,7 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.wait_transition(2)
 
     def click_viedo_to_share(self):#today
-        self.swipe_aboutme_video()#click video
+        self.swipe_newsfeed_video()#click video
 
         self.click_button_with_id("btn_trim_complete")
         self.wait_transition(1)
@@ -739,9 +755,7 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
     def setting_live(self):
         self.click_button_with_id("ib_broadcast_icon_camera_switch")
         self.wait_transition(3)
-        self.click_button_with_id("btn_friend_broadcast")
-        self.wait_transition(1)
-        self.click_button_with_id("button1")
+        self.click_button_with_id("btn_go_live")
         self.wait_transition(20)
 
     def broadcast(self,message):
@@ -760,6 +774,8 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.wait_transition(10)
 
     def stop_live(self):
+        self.click_button_with_id("iv_menu_icon_stop")
+        self.wait_transition(0.1)
         self.click_button_with_id("iv_menu_icon_stop")
         self.wait_transition(5)
 
@@ -821,7 +837,7 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
     def choose_video(self):
         #choose folder
         photofolder=self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME,"android.widget.RelativeLayout")))
-        photofolder[2].click()
+        photofolder[3].click()
         self.wait_transition(2)
         #choose video
         if self.isAndroid5():
