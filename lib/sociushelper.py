@@ -301,7 +301,6 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
 
 
     def swipe_picture(self):
-        #self.click_button_with_id("iv_action_icon")
         self.click_textview_with_text(["Image",u"圖片"])
         self.wait_transition(1)
 

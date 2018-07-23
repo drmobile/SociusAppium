@@ -100,7 +100,7 @@ class AppiumBaseHelper():
         txtView.click()
         return True
 
-    def try_click_textview_with_id(self, id):
+    def try_click_textview_with_id(self, id): #for oppo
         try:
             txtView = self.wait.until(EC.presence_of_element_located((By.ID, id)))
             if txtView is None: return False

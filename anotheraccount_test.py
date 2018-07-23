@@ -63,7 +63,7 @@ class AnotherAccountTests(BaseTests):
 
             self.sociushelper.login_point()
             # expect seeing discover page
-            #self.assertTrue(self.sociushelper.is_discover())
+            self.assertTrue(self.sociushelper.is_discover())
             displayName, soociiId = self.sociushelper.get_personal_info()
             self.assertTrue(expectedDisplayName2==displayName,
                 u"expect value {}, but return unexpected {}".format(expectedDisplayName2, displayName))
