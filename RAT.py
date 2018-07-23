@@ -58,6 +58,9 @@ def opensnakeoff():
     subprocess.Popen(['adb', 'shell','monkey', '-p','com.wepie.snakeoff' ,'-c', 'android.intent.category.LAUNCHER 1'])
 def opensoocii():
     subprocess.Popen(['adb', 'shell','monkey', '-p','me.soocii.socius.staging' ,'-c', 'android.intent.category.LAUNCHER 1'])
+def killsoocii():
+    subprocess.Popen(['adb', 'shell','am','kill','me.soocii.socius.staging'])
+
 def clear_web_facebook_data():
     subprocess.Popen(['adb','shell','pm','clear','com.android.chrome'])
 
@@ -70,6 +73,7 @@ class BaseTests(unittest.TestCase):
         desired_caps['deviceName'] = 'Android Emulator'
         desired_caps['unicodeKeyboard'] = True
         desired_caps['resetKeyboard'] = True
+        #desired_caps['automationName']="uiautomator2"
         #desired_caps['full-reset'] = True
         desired_caps['app'] = PATH(
             config.PATH_TO_TEST_APK

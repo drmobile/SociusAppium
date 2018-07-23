@@ -34,21 +34,25 @@ class EditaboutmeTests(BaseTests):
     def test_num_of_fans_follows(self):
         try:
             self.sociushelper.click_login_by_email_link()
-            self.sociushelper.login_account("carolinecheng28@gmail.com","soocii123")
+            self.sociushelper.login_account(config.EMAIL_ACCOUNT, config.EMAIL_PWD)
 
             self.sociushelper.click_require_permission_button()
+
+            self.sociushelper.click_onboading_step()
+
+            self.sociushelper.login_point()
 
             self.sociushelper.swipe_to_aboutme()
 
             #check/get fans and follow of number in aboutme
             fans_a = self.sociushelper.get_number_with_id("tv_fans_count")
+
             follow_a = self.sociushelper.get_number_with_id("tv_following_count")
-            self.sociushelper.swipe_to_friendlist()
-          #  self.sociushelper.swipe_to_friendlist()
-
-
+    
+            self.sociushelper.swipe_to_find_friend()
 
             self.assertTrue(self.sociushelper.check_num_of_fans_follow(fans_a))
+            
             self.assertTrue(self.sociushelper.check_num_of_fans_follow(follow_a))
         except:
             self.logger.info('caught exception: {}'.format(sys.exc_info()[0]))
@@ -65,18 +69,20 @@ class EditaboutmeTests(BaseTests):
 
             # flow to create new account
             self.sociushelper.create_account(
-                                 1,
                 accounthelper.name,
                 accounthelper.name,
                 accounthelper.email,
                 "password1234")
 
             # confirm to follow recommended celebrity
-            #self.sociushelper.click_confirm_recommended_celebrity()
 
             self.sociushelper.click_confirm_recommended_celebrity()
             # confirm acquiring permission dialog
             self.sociushelper.click_require_permission_button()
+
+            self.sociushelper.click_onboading_step()
+
+            self.sociushelper.login_point()
 
             self.sociushelper.swipe_to_aboutme()
 

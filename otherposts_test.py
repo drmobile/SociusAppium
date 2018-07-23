@@ -38,6 +38,8 @@ class otherposts(BaseTests):
             self.sociushelper.login_account(config.EMAIL_ACCOUNT, config.EMAIL_PWD)
 
             self.sociushelper.click_require_permission_button()
+
+            self.sociushelper.click_onboading_step()
             # click friend
            # self.sociushelper.swipe_navi_menu()
            # self.sociushelper.swipe_to_find_friend()
@@ -46,14 +48,14 @@ class otherposts(BaseTests):
             # click searchid
             self.sociushelper.swipe_to_SearchId()
             # click search id user
-            self.sociushelper.click_searchid("channing")
+            self.sociushelper.click_searchid("point4")
             # click videocard
             self.sociushelper.swipe_tofind()
 
             check_a = self.sociushelper.check_like_num(["like", u"個棒"]) # (a) to get like of number
             self.sociushelper.swipe_like()#click like
             check_b = self.sociushelper.check_like_num(["like", u"個棒"]) # (b) to get like of number
-            self.assertTrue(check_b > check_a) #After click like_bt , compare (a) with (b) count whether +1
+            self.assertTrue(check_b > check_a,u"expect value {}, but return unexpected {}".format(check_b, check_a)) #After click like_bt , compare (a) with (b) count whether +1
             self.sociushelper.swipe_like()#keep like
 
             # into msg & key in msg
@@ -67,9 +69,9 @@ class otherposts(BaseTests):
             self.sociushelper.swipe_share_posts_to_soocii()
             self.sociushelper.input_send_share_message("share posts testing")#input message and click send button
             self.sociushelper.swipe_tofind()
-            self.sociushelper.swipe_posts()
+            #self.sociushelper.swipe_posts()
             share_b = self.sociushelper.check_like_num(["shares", u"個分享"])
-            self.assertTrue(int(share_b)-1 == int(share_a))
+            self.assertTrue(share_b != share_a,u"expect value {}, but return unexpected {}".format(share_b, share_a))
             self.syshelper.wait_transition(5)
         except:
             self.logger.info('caught exception: {}'.format(sys.exc_info()[0]))

@@ -41,6 +41,8 @@ class PostsTests(BaseTests):
 
             self.sociushelper.click_require_permission_button()
 
+            self.sociushelper.click_onboading_step()
+
 
             self.sociushelper.swipe_to_newsfeed()
             self.sociushelper.swipe_refresh()
@@ -68,6 +70,8 @@ class PostsTests(BaseTests):
 
             self.sociushelper.click_require_permission_button()
 
+            self.sociushelper.click_onboading_step()
+
 
             self.sociushelper.swipe_to_newsfeed()
             self.sociushelper.swipe_refresh()
@@ -88,10 +92,12 @@ class PostsTests(BaseTests):
 
             self.sociushelper.click_require_permission_button()
 
+            self.sociushelper.click_onboading_step()
+
             self.sociushelper.swipe_to_aboutme()
             self.sociushelper.swipe_loading()
             check_a = self.sociushelper.check_like_num(["like", u"個棒"]) # (a) to get like of number
-
+            self.sociushelper.swipe_tofind()
             self.sociushelper.swipe_like()#click like
             check_b = self.sociushelper.check_like_num(["like", u"個棒"]) # (b) to get like of number
             self.assertTrue(check_b > check_a) #After click like_bt , compare (a) with (b) count whether +1
@@ -111,6 +117,8 @@ class PostsTests(BaseTests):
             self.sociushelper.click_login_by_email_link()
             self.sociushelper.login_account(config.EMAIL_ACCOUNT, config.EMAIL_PWD)
             self.sociushelper.click_require_permission_button()
+
+            self.sociushelper.click_onboading_step()
 
             self.sociushelper.swipe_to_aboutme()
             self.sociushelper.swipe_loading()
@@ -143,6 +151,8 @@ class PostsTests(BaseTests):
 
             self.sociushelper.click_require_permission_button()
 
+            self.sociushelper.click_onboading_step()
+
 
             self.sociushelper.swipe_to_newsfeed()
             self.sociushelper.swipe_refresh()
@@ -169,6 +179,8 @@ class PostsTests(BaseTests):
             self.sociushelper.click_login_by_email_link()
             self.sociushelper.login_account(config.EMAIL_ACCOUNT, config.EMAIL_PWD)
             self.sociushelper.click_require_permission_button()
+
+            self.sociushelper.click_onboading_step()
             havefile()#put file to test case (photo and viedo)
             self.sociushelper.waitii()
 
@@ -195,6 +207,8 @@ class PostsTests(BaseTests):
 
             # confirm acquiring permission dialog
             self.sociushelper.click_require_permission_button()
+
+            self.sociushelper.click_onboading_step()
 
             self.sociushelper.swipe_to_aboutme()
             self.sociushelper.swipe_loading()
