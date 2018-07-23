@@ -41,11 +41,16 @@ class DiscoveryAndSupportTests(BaseTests):
             expectedDisplayName=config.EXISTING_FACEBOOK_ACCOUNT1_DISPLAYNAME
 
             # Facebook Login button on Soocii
+            clear_web_facebook_data()
             self.sociushelper.click_facebook_login_button()
+            self.syshelper.Facebook_clear_data_step()
             self.syshelper.login_facebook_account(config.EXISTING_FACEBOOK_ACCOUNT1, config.EXISTING_FACEBOOK_ACCOUNT1_PWD)
             
             # confirm acquiring permission dialog
             self.sociushelper.click_require_permission_button()
+
+            self.sociushelper.click_onboading_step()
+
 
             self.sociushelper.swipe_discover()
 
@@ -59,11 +64,11 @@ class DiscoveryAndSupportTests(BaseTests):
             self.assertTrue(self.sociushelper.check_support())
 
             #check friendlist
-            self.assertTrue(self.sociushelper.get_friendlist_info())
+            self.assertTrue(self.sociushelper.get_fanslist_info())
 
             #self.sociushelper.swipe_navi_menu()
 
-            self.assertTrue(self.sociushelper.check_suggest())
+            #self.assertTrue(self.sociushelper.check_suggest())
 
             self.sociushelper.swipe_to_SearchId()
             self.sociushelper.get_idsearch("scheng1")
@@ -83,6 +88,8 @@ class DiscoveryAndSupportTests(BaseTests):
             self.sociushelper.login_account(config.EMAIL_ACCOUNT, config.EMAIL_PWD)
 
             self.sociushelper.click_require_permission_button()
+
+            self.sociushelper.click_onboading_step()
 
             self.sociushelper.swipe_discover()
 
@@ -114,6 +121,9 @@ class DiscoveryAndSupportTests(BaseTests):
             self.sociushelper.login_account(config.EMAIL_ACCOUNT, config.EMAIL_PWD)
 
             self.sociushelper.click_require_permission_button()
+
+            self.sociushelper.click_onboading_step()
+
 
             self.sociushelper.swipe_to_support()
 

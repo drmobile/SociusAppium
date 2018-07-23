@@ -57,6 +57,10 @@ class EmailAccountTests(BaseTests):
             # confirm acquiring permission dialog
             self.sociushelper.click_require_permission_button()
 
+            self.sociushelper.click_onboading_step()
+
+            self.sociushelper.login_point()
+
             # expect seeing discover page
             self.assertTrue(self.sociushelper.is_discover())
             displayName, soociiId = self.sociushelper.get_personal_info()
@@ -102,6 +106,10 @@ class EmailAccountTests(BaseTests):
             # confirm acquiring permission dialog
             self.sociushelper.click_require_permission_button()
 
+            self.sociushelper.click_onboading_step()
+
+            self.sociushelper.login_point()
+
             # expect seeing discover page
             self.assertTrue(self.sociushelper.is_discover())
 
@@ -111,6 +119,8 @@ class EmailAccountTests(BaseTests):
             # login with the same account again
             self.sociushelper.click_login_by_email_link()
             self.sociushelper.login_account(accounthelper.email, "password1234")
+
+            self.sociushelper.click_onboading_step()
 
             # expect seeing discover page
             self.assertTrue(self.sociushelper.is_discover())

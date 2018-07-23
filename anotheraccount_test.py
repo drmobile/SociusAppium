@@ -58,6 +58,10 @@ class AnotherAccountTests(BaseTests):
 
             # confirm acquiring permission dialog
             self.sociushelper.click_require_permission_button()
+
+            self.sociushelper.click_onboading_step()
+
+            self.sociushelper.login_point()
             # expect seeing discover page
             self.assertTrue(self.sociushelper.is_discover())
             displayName, soociiId = self.sociushelper.get_personal_info()
@@ -101,6 +105,10 @@ class AnotherAccountTests(BaseTests):
 
             # confirm acquiring permission dialog
             self.sociushelper.click_require_permission_button()
+
+            self.sociushelper.click_onboading_step()
+
+            self.sociushelper.login_point()
 
             # expect seeing discover page
             self.assertTrue(self.sociushelper.is_discover())

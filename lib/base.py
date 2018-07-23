@@ -100,10 +100,46 @@ class AppiumBaseHelper():
         txtView.click()
         return True
 
+    def try_click_textview_with_id(self, id): #for oppo
+        try:
+            txtView = self.wait.until(EC.presence_of_element_located((By.ID, id)))
+            if txtView is None: return False
+            txtView.click()
+            return True
+        except:
+            return True
+
     def send_text_with_id(self, id, text):
         field = self.wait.until(EC.presence_of_element_located((By.ID, id)))
         field.clear()
         field.send_keys(text)
+        if id in "input_soocii_id_text":
+            self.driver.keyevent(66)
+        try:
+            self.driver.hide_keyboard()
+        except:
+            # ignore any exception due to asus zenfone does not always show soft keyword when sending keys
+            pass
+
+    def send_text_with_id_no_clear(self, id, text):
+        field = self.wait.until(EC.presence_of_element_located((By.ID, id)))
+        field.send_keys(text)
+        if id in "input_soocii_id_text":
+            self.driver.keyevent(66)
+        try:
+            self.driver.hide_keyboard()
+        except:
+            # ignore any exception due to asus zenfone does not always show soft keyword when sending keys
+            pass
+
+    def send_text_with_text(self,t,text):
+        field = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.widget.TextView")))
+        for txtView in field:
+            if txtView.text in t:
+                txtView.click()
+                txtView.clear()
+                txtView.send_keys(text)
+                return True
         if id in "input_soocii_id_text":
             self.driver.keyevent(66)
         try:

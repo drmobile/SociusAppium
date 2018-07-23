@@ -30,7 +30,7 @@ class FacebookHelper(unittest.TestCase, AppiumBaseHelper):
 
             self.logger.info(len(allEditText))
 
-            self.assertTrue(len(allEditText)==2, 'could not identify facebook two text fields for user name and password')
+            self.assertTrue(len(allEditText)==2 or 3, 'could not identify facebook two text fields for user name and password')
             self.assertIsNotNone(allEditText)
             # User name field
             el = allEditText[0]
@@ -55,6 +55,9 @@ class FacebookHelper(unittest.TestCase, AppiumBaseHelper):
 
             # wait for loading
             self.wait_transition(4)
+
+            #cancel google smart lock
+            self.click_button_with_text(u'一律不要')
 
             # grant facebook permission
             self.logger.info('Try to locate facebook permission button by text')
@@ -120,7 +123,15 @@ class SysHelper(unittest.TestCase, AppiumBaseHelper):
         items = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.widget.TextView")))
         for el in items:
             if self.app_name in el.text:
-                el.click()
+                try:
+                    el.click()
+                    return self.is_aboutme()#check wheather in the about me
+                except:
+                    center_x=self.window_size["width"]
+                    center_y=self.window_size["height"]                    
+                    self.driver.tap([(center_x*0.6,center_y*0.5)],500)#for oppo back to soocii
+
+
                 return
         raise NoSuchElementException('could not identify soocii in recent apps')
 
@@ -140,6 +151,7 @@ class SysHelper(unittest.TestCase, AppiumBaseHelper):
     # support for sony z3, samsung note5
     def __enable_usage_access_sony_z3(self):
         # Usage access permission
+        self.wait_transition(5)
         items = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.widget.TextView")))
         for el in items:
             self.logger.info(u'text of located element: {}'.format(el.text))
@@ -175,6 +187,16 @@ class SysHelper(unittest.TestCase, AppiumBaseHelper):
                     self.press_back_key()
                     self.logger.info('enabled usage access in sony m4')
                     return True
+                else:
+                    self.click_button_with_text(["Allow",u"允許"])
+                    self.wait_transition(1)
+                    # Back to Soccii App
+                    self.press_back_key()
+                    self.wait_transition(1)
+                    self.click_textview_with_id("confirm")
+                    self.logger.info('enabled usage access in sony m4')
+                    return True
+
                 # could not identify alert dialog
                 self.logger.info('could not identify confirmation dialog')
                 raise NoSuchElementException('could not identify confirmation dialog')
@@ -182,6 +204,7 @@ class SysHelper(unittest.TestCase, AppiumBaseHelper):
     def enable_usage_access(self):
         # click on confirm "請選擇Soocii，並將可存取使用情形打開"
         self.click_textview_with_id("confirm")
+        self.wait_transition(2)
 
         if self.isAndroid5() == True:
             self.logger.info('try enable usage access in Android 5')
