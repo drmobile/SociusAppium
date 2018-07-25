@@ -198,8 +198,14 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
             photobtn[1].click()
 
         else:
-            photobtn = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.view.ViewGroup")))
-            photobtn[0].click()
+            try:
+
+                photobtn = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.view.ViewGroup")))
+                photobtn[0].click()
+                self.assertTrue(is_edit_photo_page())
+            except:
+                photobtn[1].click()
+
         self.wait_transition(2)
         self.click_textview_with_id("action_next")
 
@@ -277,6 +283,9 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
 
     def is_edit_video_page(self):
         return self.__visibility_of_textview(["Edit video", u"編輯影片"])
+
+    def is_edit_photo_page(self):
+        return self.__visibility_of_textview(["Next", u"下一步"])
 
     def is_sharing(self):
 
