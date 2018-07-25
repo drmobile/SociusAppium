@@ -125,7 +125,8 @@ class SysHelper(unittest.TestCase, AppiumBaseHelper):
             if self.app_name in el.text:
                 try:
                     el.click()
-                    return self.is_aboutme()#check wheather in the about me
+                    self.wait_transition(1)
+                    self.assertTrue(self.is_aboutme())#check wheather in the about me
                 except:
                     center_x=self.window_size["width"]
                     center_y=self.window_size["height"]                    
