@@ -589,6 +589,7 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.swipe_to_support()
         self.wait_transition(5)
         supportname = self.get_text_with_id("tv_display_name")
+        #if "Support" in supportname:  can't find "Support" 
         if True:
             self.wait_transition(1)
             self.press_back_key()

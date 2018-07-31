@@ -242,8 +242,6 @@ class SysHelper(unittest.TestCase, AppiumBaseHelper):
         items = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.widget.Switch")))
         for el in items:
             self.logger.info(u'text of located element: {}'.format(el.text))
-
-            #if el in u"允許顯示在其他應用程式上層":
             el.click()
 
         # Back to Soccii App
