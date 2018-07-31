@@ -73,7 +73,7 @@ class BaseTests(unittest.TestCase):
         desired_caps['deviceName'] = 'Android Emulator'
         desired_caps['unicodeKeyboard'] = True
         desired_caps['resetKeyboard'] = True
-        #desired_caps['automationName']="uiautomator2"
+        desired_caps['automationName']="uiautomator2"
         #desired_caps['full-reset'] = True
         desired_caps['app'] = PATH(
             config.PATH_TO_TEST_APK
