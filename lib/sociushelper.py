@@ -1290,4 +1290,85 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.wait_transition(1)
         self.click_button_with_id("icon_profile")
 
+    def check_aboutme_coin(self):
+        self.swipe_to_aboutme()
+        self.wait_transition(0.5)
+        coinObject = self.wait.until(EC.presence_of_element_located((By.ID, "tv_point")))
+        self.logger.info(u"金幣入口外的金幣數:"+coinObject.text)
+        cointext = self.Tertile(coinObject.text)#裡面數字表示有逗號 38105 outside -> 38,105 inside
+        coinObject.click()
+        
+        self.wait_transition(1)
+        if self.__visibility_of_textview(cointext):
+            self.press_back_key()
+            self.wait_transition(1)
+            return True
+        else:
+            self.press_back_key()
+            self.wait_transition(1)
+            return False
 
+    def check_aboutme_gift(self):
+        try:
+            self.swipe_to_aboutme()
+            self.wait_transition(0.5)
+            giftObject = self.wait.until(EC.presence_of_element_located((By.ID, "tv_gift")))
+            giftObject.click()
+            self.wait_transition(3)
+            self.press_back_key()
+            self.wait_transition(0.5)
+            return True
+        except:
+            return False
+
+    def check_aboutme_missions(self):
+        try:    
+            self.swipe_to_aboutme()
+            self.wait_transition(0.5)
+            missionsObject = self.wait.until(EC.presence_of_element_located((By.ID, "tv_mission")))
+            missionsObject.click()
+            self.wait_transition(2)
+            self.press_back_key()
+            self.wait_transition(0.5)
+            return True
+        except:
+            return False
+
+    def check_menu_ad(self):
+        try:      
+            self.click_button_with_id("navi_menu")
+            self.wait_transition(1)
+            self.click_textview_with_text(u"壽司點")
+            self.wait_transition(1)
+            items = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.widget.TextView")))
+            point = items[2].text
+            self.logger.info("point:"+point)
+            self.wait_transition(10)
+            self.click_button_with_id("tv_rewarded_button")
+            self.wait_transition(9)
+            self.press_back_key() #close_button_icon
+            self.wait_transition(1)
+            self.click_button_with_id("btn_right")
+            self.wait_transition(1)
+            items = items = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.widget.TextView")))
+            newpoint = items[2].text
+            self.logger.info("newpoint:"+newpoint)
+            self.press_back_key()
+            if point != newpoint:
+                return True
+            else:
+                raise
+        except:
+            return False
+
+    def Tertile(self, inputstr):
+        strlen = len(inputstr)
+        inputstr = inputstr[::-1]
+        print(inputstr)
+        end = 3
+        count = strlen/3
+        for i in range(1, count+1):
+            inputstr = inputstr[0:end] + "," + inputstr[end:]
+            end += 4
+        inputstr = inputstr[::-1]
+        return inputstr
