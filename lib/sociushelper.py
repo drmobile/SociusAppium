@@ -13,6 +13,53 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
     def __init__(self, driver, platformName, platformVersion):
         AppiumBaseHelper.__init__(self, driver, platformName, platformVersion)
 
+    def click_notification_detail(self):
+        self.wait_transition(1)
+        items = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.widget.TextView")))
+        for el in items:
+            self.logger.info(u'Check text view: {}'.format(el.text))
+            if ":" in el.text:
+                self.logger.info(u'Found text view: {}'.format(el.text))
+                el.click()
+                return True
+        return False
+
+    def leave_button(self):
+        self.wait_transition(1)
+        self.click_button_with_id("navi_menu")
+        self.wait_transition(1)
+
+    def click_notification_button(self):
+        self.wait_transition(1)
+        self.click_button_with_id("iv_notifications")
+        self.wait_transition(1)
+
+    def click_hamburger_button(self):
+        self.wait_transition(1)
+        self.click_button_with_id("navi_menu")
+        self.wait_transition(1)
+
+    def click_push_button(self):
+        self.wait_transition(1)
+        self.click_textview_with_text(u"推播通知設定")
+        self.wait_transition(1)
+
+    def stop_push_button(self):
+        self.wait_transition(1)
+        items = self.wait.until(EC.presence_of_all_elements_located((By.ID, "ib_setting_public_switch")))
+        for el in items:
+            el.click()
+            self.wait_transition(1)
+        self.wait_transition(1)
+
+    def start_push_button(self):
+        self.wait_transition(1)
+        items = self.wait.until(EC.presence_of_all_elements_located((By.ID, "ib_setting_public_switch")))
+        for el in items:
+            el.click()
+            self.wait_transition(1)
+        self.wait_transition(1)            
+
     def click_facebook_login_button(self):
         self.wait_transition(1)
         self.click_button_with_id("img_facebook_login")
