@@ -1,5 +1,6 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
+.pytest_cache/
 *.py[cod]
 *$py.class
 
@@ -100,3 +101,7 @@ config.py
 # node package
 node_modules/
 package-lock.json
+
+# ignore mac files
+_DS_Store
+
