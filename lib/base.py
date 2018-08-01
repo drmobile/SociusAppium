@@ -41,6 +41,20 @@ class AppiumBaseHelper():
                 return True
         return False
 
+    def isAndroid7up(self):
+        if self.platformName == 'Android':
+            if version.parse(self.platformVersion) >= version.parse('7.0.0'):
+                return True
+        return False
+
+    def isAndroid8(self):
+        if self.platformName == 'Android':
+            if version.parse(self.platformVersion) >= version.parse('8.0.0'):
+                return True
+        return False
+
+
+
     def wait_transition(self, wait_time):
         sleep(float(wait_time))
 
@@ -121,11 +135,13 @@ class AppiumBaseHelper():
             # ignore any exception due to asus zenfone does not always show soft keyword when sending keys
             pass
 
-    def send_text_with_id_no_clear(self, id, text):
-        field = self.wait.until(EC.presence_of_element_located((By.ID, id)))
-        field.send_keys(text)
-        if id in "input_soocii_id_text":
-            self.driver.keyevent(66)
+    def send_text_with_text_no_clear(self, t, text):
+        field = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.widget.EditText")))
+        for txtView in field:
+            if txtView.text in t:
+                txtView.click()
+                txtView.send_keys(text)
+                return True
         try:
             self.driver.hide_keyboard()
         except:
@@ -217,8 +233,10 @@ class AppiumBaseHelper():
                 allBtns = wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.widget.Button")))
                 if len(allBtns) == 0: return
                 for el in allBtns:
+                    self.wait_transition(1)
                     if el.text in ["Allow", u"允許"]:
                         el.click()
+                        self.wait_transition(1)
                         break
                 if count > max_counts:
                     raise TimeoutException()

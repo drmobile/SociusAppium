@@ -37,7 +37,7 @@ class FacebookHelper(unittest.TestCase, AppiumBaseHelper):
             self.logger.info(u'text of located element: {}'.format(el.text))
             el.clear()
             el.send_keys(username)
-            self.driver.hide_keyboard()
+            #self.driver.hide_keyboard()
 
             #if self.click_button_with_text([u'登入']) == True:
                 #bClickedLogin = True
@@ -46,7 +46,7 @@ class FacebookHelper(unittest.TestCase, AppiumBaseHelper):
             el = allEditText[1]
             self.logger.info(u'text of located element: {}'.format(el.text))
             el.send_keys(password)
-            self.driver.hide_keyboard()
+           # self.driver.hide_keyboard()
 
             self.logger.info('Try to locate facebook login button by text')
             if self.click_button_with_text([u'登入']) == True:
@@ -83,18 +83,18 @@ class TwitterHelper(unittest.TestCase, AppiumBaseHelper):
 
         # Webview-based
         allEditText = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.widget.EditText")))
-        self.assertTrue(len(allEditText)==2, 'could not identify facebook two text fields for user name and password')
+        self.assertTrue(len(allEditText)==2 or 3, 'could not identify facebook two text fields for user name and password')
         self.assertIsNotNone(allEditText)
         # User name field
         el = allEditText[0]
         self.logger.info(u'text of located element: {}'.format(el.text))
         el.send_keys(username)
-        self.driver.hide_keyboard()
+        #self.driver.hide_keyboard()
         # Password field
         el = allEditText[1]
         self.logger.info(u'text of located element: {}'.format(el.text))
         el.send_keys(password)
-        self.driver.hide_keyboard()
+        #self.driver.hide_keyboard()
 
         self.logger.info('Try to locate twitter login button by text')
         if self.click_button_with_text([u'授權應用程式','Authorize app']) == True:
@@ -126,7 +126,7 @@ class SysHelper(unittest.TestCase, AppiumBaseHelper):
                 try:
                     el.click()
                     self.wait_transition(1)
-                    self.assertTrue(self.is_aboutme())#check wheather in the about me
+                    self.is_aboutme()#check wheather in the about me
                 except:
                     center_x=self.window_size["width"]
                     center_y=self.window_size["height"]                    
@@ -152,7 +152,7 @@ class SysHelper(unittest.TestCase, AppiumBaseHelper):
     # support for sony z3, samsung note5
     def __enable_usage_access_sony_z3(self):
         # Usage access permission
-        self.wait_transition(5)
+        self.wait_transition(10)
         items = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.widget.TextView")))
         for el in items:
             self.logger.info(u'text of located element: {}'.format(el.text))
@@ -204,7 +204,8 @@ class SysHelper(unittest.TestCase, AppiumBaseHelper):
 
     def enable_usage_access(self):
         # click on confirm "請選擇Soocii，並將可存取使用情形打開"
-        self.click_textview_with_id("confirm")
+        if self.isAndroid7up() is False:
+            self.click_textview_with_id("confirm")
         self.wait_transition(2)
 
         if self.isAndroid5() == True:
@@ -233,10 +234,12 @@ class SysHelper(unittest.TestCase, AppiumBaseHelper):
         self.wait_transition(3)
         if self.isAndroid5():
             return
+
+        #self.wait_transition(3)
         self.click_textview_with_id("confirm")
 
         # draw on top layer permission
-        items = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.widget.TextView")))
+        items = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.widget.Switch")))
         for el in items:
             self.logger.info(u'text of located element: {}'.format(el.text))
             el.click()
@@ -244,6 +247,8 @@ class SysHelper(unittest.TestCase, AppiumBaseHelper):
         # Back to Soccii App
         self.press_back_key()
         self.logger.info('enabled draw on top layer')
+        if self.isAndroid7up():
+            self.wait_transition(3)
         return True
 
     def login_facebook_account(self, username, password):
@@ -261,6 +266,8 @@ class SysHelper(unittest.TestCase, AppiumBaseHelper):
     def Facebook_clear_data_step(self):
         self.wait_transition(2)
         self.click_button_with_text(u"接受並繼續")
+        self.wait_transition(1)
         self.click_button_with_text(u"繼續")
+        self.wait_transition(1)
         self.click_button_with_text(u"好，我知道了")
         self.wait_transition(5)
