@@ -23,6 +23,27 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
                 el.click()
                 return True
         return False
+        
+    def check_invite(self):
+        try:    
+            self.wait_transition(1)
+            self.click_button_with_id("tv_mission")
+            self.invite_button()
+            self.click_button_with_id("invite_action")
+            self.wait_transition(2)
+            self.press_back_key()
+            self.leave_button()
+            self.wait_transition(0.5)
+            self.leave_button()            
+            return True
+        except:
+            return False
+
+    def invite_button(self):
+        self.wait_transition(3)
+        allTxtViews = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.widget.TextView")))
+        allTxtViews[15].click()
+        self.wait_transition(1)
 
     def leave_button(self):
         self.wait_transition(1)
