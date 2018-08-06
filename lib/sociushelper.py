@@ -114,6 +114,13 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         el = self.wait.until(EC.presence_of_element_located((By.ID, "tv_app_version")))
         self.assertIsNotNone(el)
         for i in range(1, 11): el.click()
+        # 2178版本後 點完隱藏logger鈕會跳權限 Andriod 7
+        try:
+            self.wait_transition(3)
+            self.click_button_with_text(u"允許")
+            self.wait_transition(1)
+        except:
+            pass
         self.driver.open_notifications()
         self.wait_transition(1)
         # Click on "Soocii Logger" or expand Soocii notification
@@ -188,6 +195,14 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
 
     def click_onlinevideocard(self):
         self.click_button_with_id("iv_screenshot")
+        #點掉機率出現 餵食壽司給直播主 的教學
+        self.wait_transition(5)
+        center_x = self.window_size["width"]
+        center_y = self.window_size["height"]
+        if center_x == 1080:
+            self.driver.tap([(795, 1550)], 500)
+        else:
+            self.driver.tap([(525, 1035)], 500)
         self.wait_transition(2)
         self.press_back_key()
         self.press_back_key()
@@ -1354,7 +1369,8 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
 
     def login_point(self):
         self.wait_transition(6)
-        self.click_textview_with_text(u"確認")
+        #self.click_textview_with_text(u"確認")
+        self.click_button_with_id("btn_right")
         self.wait_transition(1)
         self.click_button_with_id("icon_profile")
 

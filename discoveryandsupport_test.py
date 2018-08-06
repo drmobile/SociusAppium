@@ -47,10 +47,10 @@ class DiscoveryAndSupportTests(BaseTests):
             self.syshelper.login_facebook_account(config.EXISTING_FACEBOOK_ACCOUNT1, config.EXISTING_FACEBOOK_ACCOUNT1_PWD)
             
             # confirm acquiring permission dialog
-            self.sociushelper.click_require_permission_button()
+            #self.sociushelper.click_require_permission_button()
 
             self.sociushelper.click_onboading_step()
-
+            self.sociushelper.login_point()
 
             self.sociushelper.swipe_discover()
 
@@ -79,6 +79,8 @@ class DiscoveryAndSupportTests(BaseTests):
             self.logger.info('caught exception: {}'.format(sys.exc_info()[0]))
             self.syshelper.capture_screen("test_allpage")
             raise
+        finally:
+            self.sociushelper.click_delete_account_button()
 
     def test_discoverytap(self):
         reload(sys)
@@ -87,7 +89,7 @@ class DiscoveryAndSupportTests(BaseTests):
             self.sociushelper.click_login_by_email_link()
             self.sociushelper.login_account(config.EMAIL_ACCOUNT, config.EMAIL_PWD)
 
-            self.sociushelper.click_require_permission_button()
+            #self.sociushelper.click_require_permission_button()
 
             self.sociushelper.click_onboading_step()
 
@@ -120,7 +122,7 @@ class DiscoveryAndSupportTests(BaseTests):
             self.sociushelper.click_login_by_email_link()
             self.sociushelper.login_account(config.EMAIL_ACCOUNT, config.EMAIL_PWD)
 
-            self.sociushelper.click_require_permission_button()
+            #self.sociushelper.click_require_permission_button()
 
             self.sociushelper.click_onboading_step()
 

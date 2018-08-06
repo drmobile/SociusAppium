@@ -49,19 +49,19 @@ class FacebookAccountTests(BaseTests):
             self.syshelper.Facebook_clear_data_step()
             self.syshelper.login_facebook_account(config.EXISTING_FACEBOOK_ACCOUNT1, config.EXISTING_FACEBOOK_ACCOUNT1_PWD)
 
+            '''以下著解為舊版流程
             # confirm acquiring permission dialog
             self.sociushelper.click_require_permission_button()
-
             # only need to skip floating ball guide mark once
             self.sociushelper.skip_floating_ball_guide_mark()
-
             # only need to enable usage access once
             self.syshelper.enable_usage_access()
-
             # only need to enable draw on top layer once
-            self.syshelper.enable_draw_on_top_layer()
+            self.syshelper.enable_draw_on_top_layer()'''
 
             self.sociushelper.click_onboading_step()
+
+            self.sociushelper.login_point()
 
             # expect seeing discover page
             self.assertTrue(self.sociushelper.is_discover())
@@ -84,7 +84,9 @@ class FacebookAccountTests(BaseTests):
             self.logger.info('caught exception: {}'.format(sys.exc_info()[0]))
             self.syshelper.capture_screen("test_fresh_install_and_enable_usage_access")
             raise
-
+        finally:
+            self.sociushelper.click_delete_account_button()
+            
     # Login with new facebook account who friend with existing facebook/soocii account
     def test_login_new_facebook_account(self):
         try:
