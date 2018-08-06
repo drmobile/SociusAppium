@@ -55,7 +55,7 @@ class EmailAccountTests(BaseTests):
             self.sociushelper.click_confirm_recommended_celebrity()
 
             # confirm acquiring permission dialog
-            self.sociushelper.click_require_permission_button()
+            #self.sociushelper.click_require_permission_button()
 
             self.sociushelper.click_onboading_step()
 
@@ -104,7 +104,7 @@ class EmailAccountTests(BaseTests):
             self.sociushelper.click_confirm_recommended_celebrity()
 
             # confirm acquiring permission dialog
-            self.sociushelper.click_require_permission_button()
+            #self.sociushelper.click_require_permission_button()
 
             self.sociushelper.click_onboading_step()
 

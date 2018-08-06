@@ -65,7 +65,21 @@ class FacebookHelper(unittest.TestCase, AppiumBaseHelper):
                 bGrantedPermission = True
             self.assertTrue(bGrantedPermission, 'could not identify facebook grant permission button in the page')
 
-            # wait for loading
+            # 1181版本之後的FB登入流程改變
+            self.wait_transition(3)
+            self.click_textview_with_id("gender_value")
+            self.wait_transition(1)
+            self.click_textview_with_text([u"男","Male"])
+            self.wait_transition(1)
+            #原有的ＩＤ被使用過,所以更改
+            self.send_text_with_id("soocii_id_value", "gcob1111")
+            
+            self.wait_transition(1)
+            self.click_button_with_id("register")
+            self.wait_transition(3)
+            self.click_button_with_id("add_follow_confirm")
+            self.wait_transition(3)
+            self.click_button_with_id("add_follow_confirm")
             self.wait_transition(1)
 
         return True
@@ -269,5 +283,9 @@ class SysHelper(unittest.TestCase, AppiumBaseHelper):
         self.wait_transition(1)
         self.click_button_with_text(u"繼續")
         self.wait_transition(1)
+        #for HTC one E9
+        self.driver.swipe(start_x=440,start_y=1090,end_x=440,end_y=930,duration=500)
+        self.wait_transition(1)
+
         self.click_button_with_text(u"好，我知道了")
         self.wait_transition(5)
