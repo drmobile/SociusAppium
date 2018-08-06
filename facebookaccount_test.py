@@ -57,7 +57,8 @@ class FacebookAccountTests(BaseTests):
             # only need to enable usage access once
             self.syshelper.enable_usage_access()
             # only need to enable draw on top layer once
-            self.syshelper.enable_draw_on_top_layer()'''
+            self.syshelper.enable_draw_on_top_layer()
+            '''
 
             self.sociushelper.click_onboading_step()
 

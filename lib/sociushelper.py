@@ -114,7 +114,7 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         el = self.wait.until(EC.presence_of_element_located((By.ID, "tv_app_version")))
         self.assertIsNotNone(el)
         for i in range(1, 11): el.click()
-        # 2178版本後 點完隱藏logger鈕會跳權限 Andriod 7
+        # 1181版本後 點完隱藏logger鈕會跳權限 Andriod 7
         try:
             self.wait_transition(3)
             self.click_button_with_text(u"允許")

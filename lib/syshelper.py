@@ -65,7 +65,7 @@ class FacebookHelper(unittest.TestCase, AppiumBaseHelper):
                 bGrantedPermission = True
             self.assertTrue(bGrantedPermission, 'could not identify facebook grant permission button in the page')
 
-            # 2178版本之後的FB登入流程改變
+            # 1181版本之後的FB登入流程改變
             self.wait_transition(3)
             self.click_textview_with_id("gender_value")
             self.wait_transition(1)
