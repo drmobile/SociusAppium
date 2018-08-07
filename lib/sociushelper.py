@@ -200,7 +200,10 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         center_x = self.window_size["width"]
         center_y = self.window_size["height"]
         if center_x == 1080:
+            #for 虛擬鍵手機 任務出現的位置
             self.driver.tap([(795, 1550)], 500)
+            #for 實體鍵手機 任務出現的位置
+            self.driver.tap([(1018, 1649)], 500)
         else:
             self.driver.tap([(525, 1035)], 500)
         self.wait_transition(2)
@@ -1219,7 +1222,9 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.click_button_with_id("rl_edit")
 
         self.wait_transition(2)
-        self.click_button_with_id("iv_avatar")
+        #self.click_button_with_id("iv_avatar")
+        items = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.widget.ImageView")))
+        items[0].click()
 
         self.wait_transition(2)
        # self.Brosew_photo()

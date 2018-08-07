@@ -36,12 +36,16 @@ class EditaboutmeTests(BaseTests):
             self.sociushelper.click_login_by_email_link()
             self.sociushelper.login_account(config.EMAIL_ACCOUNT, config.EMAIL_PWD)
 
-            self.sociushelper.click_require_permission_button()
+            #self.sociushelper.click_require_permission_button()
 
             self.sociushelper.click_onboading_step()
 
-            self.sociushelper.login_point()
-
+            #可能已登入過就不會pop
+            try:
+                self.sociushelper.login_point()
+            except:
+                pass
+            
             self.sociushelper.swipe_to_aboutme()
 
             #check/get fans and follow of number in aboutme
@@ -78,7 +82,7 @@ class EditaboutmeTests(BaseTests):
 
             self.sociushelper.click_confirm_recommended_celebrity()
             # confirm acquiring permission dialog
-            self.sociushelper.click_require_permission_button()
+            #self.sociushelper.click_require_permission_button()
 
             self.sociushelper.click_onboading_step()
 
