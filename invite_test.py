@@ -40,10 +40,13 @@ class InviteTests(BaseTests):
 			#登入現有帳號測邀請好友功能
 			self.sociushelper.click_login_by_email_link()
 			self.sociushelper.login_account("invite@test.com", "test123")
-			self.sociushelper.click_require_permission_button()
+			#self.sociushelper.click_require_permission_button()
 			self.sociushelper.click_onboading_step()
 			
-			self.sociushelper.login_point()
+			try:
+				self.sociushelper.login_point()
+			except:
+				self.sociushelper.swipe_to_aboutme()
 
 			self.assertTrue(self.sociushelper.check_invite(), "check_invite failed")
 		except:

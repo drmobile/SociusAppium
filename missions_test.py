@@ -45,6 +45,12 @@ class MissionsTests(BaseTests):
  			self.sociushelper.click_require_permission_button()
 			self.sociushelper.click_onboading_step()
 			
+			#若登入過會報錯
+			try:
+				self.sociushelper.login_point()
+			except:
+				pass
+
 			self.assertTrue(self.sociushelper.check_aboutme_coin(), "check_aboutme_coin failed")
 			self.assertTrue(self.sociushelper.check_aboutme_gift(), "check_aboutme_gift failed")
 			self.assertTrue(self.sociushelper.check_aboutme_missions(), "check_aboutme_mission failed")
@@ -67,7 +73,7 @@ class MissionsTests(BaseTests):
                 accounthelper.email,
                 "password1234")
 			self.sociushelper.click_confirm_recommended_celebrity()
-			self.sociushelper.click_require_permission_button()
+			#self.sociushelper.click_require_permission_button()
 			self.sociushelper.click_onboading_step()
 			self.sociushelper.login_point()
 			self.assertTrue(self.sociushelper.check_menu_ad(), "check_menu_ad failed")
