@@ -45,11 +45,7 @@ class MissionsTests(BaseTests):
  			self.sociushelper.click_require_permission_button()
 			self.sociushelper.click_onboading_step()
 			
-			#若登入過會報錯
-			try:
-				self.sociushelper.login_point()
-			except:
-				pass
+			self.sociushelper.login_point()
 
 			self.assertTrue(self.sociushelper.check_aboutme_coin(), "check_aboutme_coin failed")
 			self.assertTrue(self.sociushelper.check_aboutme_gift(), "check_aboutme_gift failed")

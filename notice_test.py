@@ -39,10 +39,9 @@ class NoticeTest(BaseTests):
             #self.sociushelper.click_require_permission_button()
             self.sociushelper.click_onboading_step()
 
-            try:
-                self.sociushelper.login_point()
+            if self.sociushelper.login_point():
                 self.sociushelper.swipe_discover()
-            except:
+            else:
                 pass    
                 
             self.sociushelper.click_notification_button()
@@ -71,10 +70,9 @@ class NoticeTest(BaseTests):
             self.sociushelper.click_confirm_recommended_celebrity()
             self.sociushelper.click_onboading_step()
 
-            try:
-                self.sociushelper.login_point()
+            if self.sociushelper.login_point():
                 self.sociushelper.swipe_discover()
-            except:
+            else:
                 pass    
                 
             self.sociushelper.click_notification_button()
@@ -99,10 +97,9 @@ class NoticeTest(BaseTests):
             self.sociushelper.click_require_permission_button()
             self.sociushelper.click_onboading_step()
 
-            try:
-                self.sociushelper.login_point()
+            if self.sociushelper.login_point():
                 self.sociushelper.swipe_discover()
-            except:
+            else:
                 pass
 
             self.sociushelper.click_hamburger_button()

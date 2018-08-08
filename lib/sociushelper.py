@@ -1373,11 +1373,16 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
             self.driver.tap([(530, 400)], 500) 
 
     def login_point(self):
-        self.wait_transition(6)
-        #self.click_textview_with_text(u"確認")
-        self.click_button_with_id("btn_right")
-        self.wait_transition(1)
-        self.click_button_with_id("icon_profile")
+        #若帳號已登入過則無法點擊會報錯回傳false, 若正確點擊回傳true
+        try:
+            self.wait_transition(6)
+            #self.click_textview_with_text(u"確認")
+            self.click_button_with_id("btn_right")
+            self.wait_transition(1)
+            self.click_button_with_id("icon_profile")
+            return True
+        except:
+            return False
 
     def check_aboutme_coin(self):
         self.swipe_to_aboutme()
