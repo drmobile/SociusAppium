@@ -40,11 +40,7 @@ class EditaboutmeTests(BaseTests):
 
             self.sociushelper.click_onboading_step()
 
-            #可能已登入過就不會pop
-            try:
-                self.sociushelper.login_point()
-            except:
-                pass
+            self.sociushelper.login_point()
             
             self.sociushelper.swipe_to_aboutme()
 
