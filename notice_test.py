@@ -40,9 +40,7 @@ class NoticeTest(BaseTests):
             self.sociushelper.click_onboading_step()
 
             if self.sociushelper.login_point():
-                self.sociushelper.swipe_discover()
-            else:
-                pass    
+                self.sociushelper.swipe_discover()    
                 
             self.sociushelper.click_notification_button()
             try:
@@ -71,9 +69,7 @@ class NoticeTest(BaseTests):
             self.sociushelper.click_onboading_step()
 
             if self.sociushelper.login_point():
-                self.sociushelper.swipe_discover()
-            else:
-                pass    
+                self.sociushelper.swipe_discover()    
                 
             self.sociushelper.click_notification_button()
             try:
@@ -99,8 +95,6 @@ class NoticeTest(BaseTests):
 
             if self.sociushelper.login_point():
                 self.sociushelper.swipe_discover()
-            else:
-                pass
 
             self.sociushelper.click_hamburger_button()
             self.sociushelper.click_push_button()

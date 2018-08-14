@@ -448,6 +448,9 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
     def swipe_to_support(self):
         self.click_button_with_id("navi_menu")
         self.wait_transition(2)
+        #1184版本後 客服姊姊的button需下滑才看得見
+        self.swipe_tofind()
+        self.wait_transition(1)
         self.click_textview_with_text(u"客服姐姐")
         self.wait_transition(2)
 
