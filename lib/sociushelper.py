@@ -393,6 +393,9 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
             return False
         return True
 
+    def is_empty_leaderboard(self):
+        return self.__visibility_of_textview(["leaderboard", u"尚未有排名"])
+
     def swipe_makesure(self):
         self.wait_transition(2)
         self.click_button_with_id("add_follow_confirm")
@@ -689,7 +692,8 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
             self.press_back_key()
             return False
 
-       
+    def check_follow_btn(self):
+        return self.__visibility_of_button("follow_done")
 
 
     def check_suggest(self):
@@ -1469,3 +1473,15 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
             end += 4
         inputstr = inputstr[::-1]
         return inputstr
+
+    def click_contributionboard(self):
+        self.wait_transition(1)
+        self.click_button_with_id("rl_donation_board")
+
+    def back_to_aboutme(self):
+        self.wait_transition(1)
+        self.click_button_with_id("navi_menu")
+
+    def click_leaderboard(self):
+        self.wait_transition(1)
+        self.click_button_with_id("iv_leaderboard")
