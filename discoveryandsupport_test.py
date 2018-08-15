@@ -92,6 +92,7 @@ class DiscoveryAndSupportTests(BaseTests):
             #self.sociushelper.click_require_permission_button()
 
             self.sociushelper.click_onboading_step()
+            self.sociushelper.login_point()
 
             self.sociushelper.swipe_discover()
 
