@@ -1381,14 +1381,6 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.wait_transition(1)
         self.click_button_with_id("rl_donation_board")
 
-    def click_weekleader(self):
-        self.wait_transition(1)
-        self.click_textview_with_text(u"週排行")
-
-    def click_monthleader(self):
-        self.wait_transition(1)
-        self.click_textview_with_text(u"月排行")
-
     def back_to_aboutme(self):
         self.wait_transition(1)
         self.click_button_with_id("navi_menu")
