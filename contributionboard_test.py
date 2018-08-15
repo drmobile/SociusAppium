@@ -36,11 +36,13 @@ class contributionBoardTests(BaseTests):
             self.sociushelper.click_login_by_email_link()
             self.sociushelper.login_account(config.EMAIL_ACCOUNT, config.EMAIL_PWD)
 
-            self.sociushelper.click_require_permission_button()
+            #self.sociushelper.click_require_permission_button()
 
             self.sociushelper.click_onboading_step()
 
             self.sociushelper.login_point()
+
+            self.sociushelper.swipe_to_aboutme()
 
             self.sociushelper.click_contributionboard()
 
@@ -54,7 +56,7 @@ class contributionBoardTests(BaseTests):
 
             self.sociushelper.wait_transition(2)
 
-            self.sociushelper.back_to_aboutme()
+            self.sociushelper.leave_button()
 
             self.sociushelper.wait_transition(5)
         except:
