@@ -307,7 +307,7 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
             return False
         return True
 
-    def is_none_leaderboard(self):
+    def is_empty_leaderboard(self):
         return self.__visibility_of_textview(["leaderboard", u"尚未有排名"])
 
     def swipe_makesure(self):
