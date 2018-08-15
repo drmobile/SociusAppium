@@ -52,7 +52,7 @@ class LeaderBoardTests(BaseTests):
 
             self.sociushelper.wait_transition(1)
 
-            if(not(self.sociushelper.is_none_leaderboard())):
+            if(not(self.sociushelper.is_empty_leaderboard())):
                 self.sociushelper.click_button_with_id("iv_avatar_1st")
 
                 self.sociushelper.wait_transition(1)
