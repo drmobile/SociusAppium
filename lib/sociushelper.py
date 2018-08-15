@@ -693,8 +693,11 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
             return False
 
     def check_follow_btn(self):
-        return self.__visibility_of_button("follow_done")
-
+        try:
+            self.__visibility_of_button("follow_done")
+            return True
+        except:
+            return False
 
     def check_suggest(self):
         self.swipe_to_suggest()
@@ -1477,10 +1480,6 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
     def click_contributionboard(self):
         self.wait_transition(1)
         self.click_button_with_id("rl_donation_board")
-
-    def back_to_aboutme(self):
-        self.wait_transition(1)
-        self.click_button_with_id("navi_menu")
 
     def click_leaderboard(self):
         self.wait_transition(1)

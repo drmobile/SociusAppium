@@ -63,6 +63,13 @@ class LeaderBoardTests(BaseTests):
 
                 self.sociushelper.click_button_with_id("follow_btn")
 
+                #如果有出現 追蹤人數已達上限 把它點掉
+                try:
+                    self.sociushelper.wait_transition(1)
+                    self.sociushelper.click_button_with_id("btn_confirm")
+                except:
+                    pass
+                
                 if(self.sociushelper.check_follow_btn()):
                     self.sociushelper.swipe_left()
 
