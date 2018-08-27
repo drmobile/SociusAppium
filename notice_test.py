@@ -90,7 +90,7 @@ class NoticeTest(BaseTests):
             #測試推播通知設定
             self.sociushelper.click_login_by_email_link()
             self.sociushelper.login_account("poi098@gmail.com", "poi098")
-            self.sociushelper.click_require_permission_button()
+            #self.sociushelper.click_require_permission_button()
             self.sociushelper.click_onboading_step()
 
             if self.sociushelper.login_point():

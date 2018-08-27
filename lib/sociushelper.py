@@ -40,7 +40,7 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
             return False
 
     def invite_button(self):
-        self.wait_transition(3)
+        self.wait_transition(10)
         allTxtViews = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.widget.TextView")))
         allTxtViews[15].click()
         self.wait_transition(1)
