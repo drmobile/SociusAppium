@@ -37,9 +37,11 @@ class SearchTests(BaseTests):
             self.sociushelper.click_login_by_email_link()
             self.sociushelper.login_account(config.EMAIL_ACCOUNT, config.EMAIL_PWD)
 
-            self.sociushelper.click_require_permission_button()
+            #self.sociushelper.click_require_permission_button()
 
             self.sociushelper.click_onboading_step()
+            self.sociushelper.login_point()
+
             # click search
             self.sociushelper.check_search_button()
             self.assertTrue(self.sociushelper.check_game_tag())
@@ -59,9 +61,10 @@ class SearchTests(BaseTests):
         try:
             self.sociushelper.click_login_by_email_link()
             self.sociushelper.login_account(config.EMAIL_ACCOUNT, config.EMAIL_PWD)
-            self.sociushelper.click_require_permission_button()
+            #self.sociushelper.click_require_permission_button()
 
             self.sociushelper.click_onboading_step()
+            self.sociushelper.login_point()
             self.sociushelper.check_search_button()
             self.sociushelper.search_name(u"北區聯賽")
             self.assertTrue(self.sociushelper.check_northrace())

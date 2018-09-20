@@ -43,10 +43,8 @@ class InviteTests(BaseTests):
 			#self.sociushelper.click_require_permission_button()
 			self.sociushelper.click_onboading_step()
 			
-			if self.sociushelper.login_point():
-				pass
-			else:
-				self.sociushelper.swipe_to_aboutme()
+			self.sociushelper.login_point()
+			self.sociushelper.swipe_to_aboutme()
 
 			self.assertTrue(self.sociushelper.check_invite(), "check_invite failed")
 		except:

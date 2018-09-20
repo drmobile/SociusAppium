@@ -35,13 +35,12 @@ class NoticeTest(BaseTests):
         try:
             #測試通知中心by有通知
             self.sociushelper.click_login_by_email_link()
-            self.sociushelper.login_account("poi098@gmail.com", "poi098")
+            self.sociushelper.login_account("002@tester.com", "test123")
             #self.sociushelper.click_require_permission_button()
             self.sociushelper.click_onboading_step()
 
-            if self.sociushelper.login_point():
-                self.sociushelper.swipe_discover()    
-                
+            self.sociushelper.login_point()
+
             self.sociushelper.click_notification_button()
             try:
                 self.assertTrue(self.sociushelper.click_notification_detail())
@@ -68,9 +67,8 @@ class NoticeTest(BaseTests):
             self.sociushelper.click_confirm_recommended_celebrity()
             self.sociushelper.click_onboading_step()
 
-            if self.sociushelper.login_point():
-                self.sociushelper.swipe_discover()    
-                
+            self.sociushelper.login_point()
+
             self.sociushelper.click_notification_button()
             try:
                 self.assertTrue(self.sociushelper.click_notification_detail())
@@ -93,8 +91,7 @@ class NoticeTest(BaseTests):
             #self.sociushelper.click_require_permission_button()
             self.sociushelper.click_onboading_step()
 
-            if self.sociushelper.login_point():
-                self.sociushelper.swipe_discover()
+            self.sociushelper.login_point()
 
             self.sociushelper.click_hamburger_button()
             self.sociushelper.click_push_button()

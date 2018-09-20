@@ -13,6 +13,7 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
     def __init__(self, driver, platformName, platformVersion):
         AppiumBaseHelper.__init__(self, driver, platformName, platformVersion)
 
+
     def click_notification_detail(self):
         self.wait_transition(1)
         items = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.widget.TextView")))
@@ -22,15 +23,24 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
                 self.logger.info(u'Found text view: {}'.format(el.text))
                 el.click()
                 return True
+            elif u"前" in el.text:
+                self.logger.info(u'Found text view: {}'.format(el.text))
+                el.click()
+                return True
+            elif u"剛" in el.text:
+                self.logger.info(u'Found text view: {}'.format(el.text))
+                el.click()
+                return True
         return False
         
     def check_invite(self):
-        try:    
+        try:
             self.wait_transition(1)
-            self.click_button_with_id("tv_mission")
+            self.swipe_up(250)
+            self.click_textview_with_text(u"任務")
             self.invite_button()
             self.click_button_with_id("invite_action")
-            self.wait_transition(2)
+            self.wait_transition(3.5)
             self.press_back_key()
             self.leave_button()
             self.wait_transition(0.5)
@@ -46,8 +56,10 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.wait_transition(1)
 
     def leave_button(self):
-        self.wait_transition(1)
-        self.click_button_with_id("navi_menu")
+        self.wait_transition(2)
+        #self.click_button_with_id("navi_menu")
+        tmp = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.widget.ImageButton")))
+        tmp[0].click()
         self.wait_transition(1)
 
     def click_notification_button(self):
@@ -124,27 +136,23 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         self.driver.open_notifications()
         self.wait_transition(1)
         # Click on "Soocii Logger" or expand Soocii notification
-        items = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.widget.TextView")))
-        self.swipe_right()#for oppo
-        for el in items:
-            self.logger.info(u'Check text view: {}'.format(el.text))
-            if el.text == "Soocii Logger":
-                self.logger.info(u'Found text view: {}'.format(el.text))
-                el.click()
-                self.wait_transition(1)
-                return
-        # Expand Soocii notification
-        for el in items:
-            if "Soocii" in el.text:
-                el.click()
-                self.wait_transition(1)
-                # Click on "Soocii Logger"
-                items = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.widget.TextView")))
-                for el in items:
-                    if el.text == "Soocii Logger":
-                        el.click()
-                        self.wait_transition(1)
-                        return
+
+        try:
+            tmp = self.wait.until(
+                EC.presence_of_all_elements_located((By.CLASS_NAME, "android.view.NotificationHeaderView$2")))
+            tmp[0].click()
+
+        finally:
+            items = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.widget.TextView")))
+
+            for el in items:
+                self.logger.info(u'Check text view: {}'.format(el.text))
+                if el.text == "Soocii Logger":
+                    self.logger.info(u'Found text view: {}'.format(el.text))
+                    el.click()
+                    self.wait_transition(1)
+                    return
+
 
     def waitii(self):
         self.wait_transition(3)
@@ -292,12 +300,13 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
 
                 photobtn = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.view.ViewGroup")))
                 photobtn[0].click()
-                self.assertTrue(is_edit_photo_page())
+                self.wait_transition(2)
+                self.assertTrue(self.is_edit_photo_page())
             except:
                 photobtn[1].click()
 
         self.wait_transition(2)
-        self.click_textview_with_id("action_next")
+        self.click_button_with_id("action_next")
 
     def Take_photo(self):
         self.click_button_with_id("avatar")
@@ -1387,9 +1396,9 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         try:
             self.wait_transition(6)
             #self.click_textview_with_text(u"確認")
-            self.click_button_with_id("btn_right")
+            self.click_button_with_id("tv_collect_gift")
             self.wait_transition(1)
-            self.click_button_with_id("icon_profile")
+            self.click_button_with_id("btn_confirm")
             return True
         except:
             return False
