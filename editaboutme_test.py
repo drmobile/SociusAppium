@@ -90,6 +90,8 @@ class EditaboutmeTests(BaseTests):
 
             self.sociushelper.edit_username_and_introduction()
 
+            self.sociushelper.swipe_up(250)
+
             self.sociushelper.check_text("tv_display_name", "edit display")
 
             self.sociushelper.check_text("tv_about_me", "Hello welcome to my broatcast!!!")
