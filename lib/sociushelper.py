@@ -19,15 +19,15 @@ class SociusHelper(unittest.TestCase, AppiumBaseHelper):
         items = self.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "android.widget.TextView")))
         for el in items:
             self.logger.info(u'Check text view: {}'.format(el.text))
-            if ":" in el.text:
+            if ":" in el.text:		 #for "hh:mm"的通知	
                 self.logger.info(u'Found text view: {}'.format(el.text))
                 el.click()
                 return True
-            elif u"前" in el.text:
+            elif u"前" in el.text:   #for "xxx前"的通知
                 self.logger.info(u'Found text view: {}'.format(el.text))
                 el.click()
                 return True
-            elif u"剛" in el.text:
+            elif u"剛" in el.text:   #for "剛剛"的通知
                 self.logger.info(u'Found text view: {}'.format(el.text))
                 el.click()
                 return True
